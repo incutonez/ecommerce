@@ -3,7 +3,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { createHashHistory, createRouter, RouterProvider } from "@tanstack/react-router";
-import { CanceledError } from "axios";
+import axios, { isCancel } from "axios";
 import { queryClient } from "@/hooks/api.ts";
 import { routeTree } from "@/routeTree.gen.ts";
 
@@ -27,17 +27,23 @@ const router = createRouter({
 	history: createHashHistory(),
 });
 
-// TODO: Do something with global errors
-addEventListener("error", (event) => {
-	event.preventDefault();
+/**
+ * In StrictMode, we sometimes get double renderings that call 2 APIs, but the load API is called so quickly that it
+ * doesn't actually have a chance to make a network call, but it still gets aborted, which is bubbled as a global error
+ * instead of an Axios error.  So that's the scenario being handled here.
+ */
+addEventListener("unhandledrejection", (event) => {
+	if (isCancel(event.reason)) {
+		event.preventDefault();
+	}
 });
 
-// TODO: Do something with global errors
-addEventListener("unhandledrejection", (event) => {
-	// This still shows the error in Firefox, but Chrome is OK
-	if (event.reason instanceof CanceledError) {
-		// Don't bubble canceled/aborted calls... these are fine
-		event.preventDefault();
+/**
+ * This handles any global errors from Axios... we ignore canceled errors.
+ */
+axios.interceptors.response.use(undefined, (error) => {
+	if (isCancel(error)) {
+		return false;
 	}
 });
 

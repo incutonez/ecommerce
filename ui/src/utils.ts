@@ -21,6 +21,11 @@ export function toCurrency(value: number) {
 	return currencyFormatter.format(value);
 }
 
+export function toPercent(value: number) {
+	value *= 100;
+	return `${value.toFixed(0)}%`;
+}
+
 export function uniqueKey(parent: string, id: string | number) {
 	return `${parent}_${id}`;
 }

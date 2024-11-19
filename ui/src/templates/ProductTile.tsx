@@ -7,7 +7,7 @@ import { ProductPrice } from "@/components/ProductPrice.tsx";
 import { RatingStars } from "@/components/RatingStars.tsx";
 import { ContextProductRecord, useProductRecord } from "@/contexts.ts";
 import { RouteViewProduct } from "@/routes.ts";
-import { cartAdd, cartRemove, useCartItemTotal } from "@/stores/cartTotal.ts";
+import { CartTotalStore, useCartItemTotal } from "@/stores/cartTotal.ts";
 import { getImageUrl } from "@/utils.ts";
 
 export interface IProductTile {
@@ -65,11 +65,11 @@ export function ProductCartButtons({ productId }: IProductCartButtons) {
 	const cartTotal = useCartItemTotal(productId);
 
 	function onClickCartAdd() {
-		cartAdd(productId);
+		CartTotalStore.cartAdd(productId);
 	}
 
 	function onClickCartRemove() {
-		cartRemove(productId);
+		CartTotalStore.cartRemove(productId);
 	}
 
 	if (cartTotal) {

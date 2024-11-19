@@ -1,7 +1,7 @@
 import { BaseButton } from "@/components/BaseButton.tsx";
-import { useCartCheckout } from "@/stores/cartCheckout.ts";
+import { useCartCheckout } from "@/stores/CartCheckout.ts";
 import { ProductCartButtons, ProductDescription, ProductImage } from "@/templates/ProductTile.tsx";
-import { toCurrency, uniqueKey } from "@/utils.ts";
+import { toCurrency, toPercent, uniqueKey } from "@/utils.ts";
 
 export function CheckoutItems() {
 	const { data } = useCartCheckout();
@@ -68,8 +68,8 @@ export function CheckoutTotal() {
 			<section className="flex justify-between">
 				<span>
 					Tax (
-					{taxPercent * 100}
-					%):
+					{toPercent(taxPercent)}
+					):
 				</span>
 				<span>
 					{toCurrency(tax)}

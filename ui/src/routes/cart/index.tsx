@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { RouteViewCart } from "@/routes.ts";
-import { loadCartCheckout } from "@/stores/cartCheckout.ts";
+import { CartCheckoutStore } from "@/stores/CartCheckout.ts";
 import { useCart } from "@/stores/cartTotal.ts";
 import { CheckoutItems, CheckoutTotal } from "@/templates/CartCheckout.tsx";
 
@@ -16,10 +16,9 @@ function RouteComponent() {
 	 * StrictMode is removed, it's only called once... this is an unfortunate side effect of StrictMode
 	 */
 	useEffect(() => {
-		const controller = new AbortController();
-		loadCartCheckout(controller.signal);
+		CartCheckoutStore.load();
 		return () => {
-			controller.abort();
+			CartCheckoutStore.abort();
 		};
 	}, [total]);
 	return (
