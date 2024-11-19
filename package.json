@@ -10,7 +10,7 @@
     "spec": "cd spec && npm run generate",
     "spec:build": "cd spec && npm run build",
     "ui": "cd ui && npm run dev",
-    "ui:build": "cd ui && npm run ui:build",
+    "ui:build": "cd ui && npm run build",
     "ui:commit": "cd ui && npm run lint && npm run build",
     "prepare": "husky"
   },
