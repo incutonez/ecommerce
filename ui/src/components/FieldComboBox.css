@@ -1,0 +1,7 @@
+.field-combo-box {
+    @apply h-8 px-2 rounded cursor-pointer bg-slate-300;
+
+    & option {
+        @apply bg-slate-100;
+    }
+}
