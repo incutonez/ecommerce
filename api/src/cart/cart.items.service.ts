@@ -50,6 +50,15 @@ export class CartItemsService {
 		if (difference === 0) {
 			return;
 		}
+		// Remove all short circuit
+		else if (total === 0) {
+			await CartItemModel.destroy({
+				where: {
+					user_id: this.request.user.sub,
+					product_id: productId,
+				},
+			});
+		}
 		// We want to delete the difference
 		else if (difference > 0) {
 			const promises: Promise<void>[] = [];

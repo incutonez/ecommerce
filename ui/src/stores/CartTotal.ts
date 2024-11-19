@@ -10,7 +10,10 @@ class CartTotal extends BaseStore<CartResponseModel> {
 	};
 
 	async loadCartCount() {
-		const { data } = await CartItemsAPI.getCart();
+		this.abort();
+		const { data } = await CartItemsAPI.getCart({
+			signal: this.apiController.signal,
+		});
 		this.setSnapshot(data);
 	}
 
@@ -23,6 +26,13 @@ class CartTotal extends BaseStore<CartResponseModel> {
 
 	async cartRemove(productId: string) {
 		await CartItemsAPI.remove(productId);
+		await this.loadCartCount();
+	}
+
+	async cartUpdateCount(productId: string, total: number) {
+		await CartItemsAPI.updateCount(productId, {
+			total,
+		});
 		await this.loadCartCount();
 	}
 }

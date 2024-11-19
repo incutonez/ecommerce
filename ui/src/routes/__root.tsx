@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { LoadingMask } from "@/components/LoadingMask.tsx";
-import { optionsUserLoad } from "@/hooks/user.ts";
+import { UserStore, useUserStore } from "@/stores/User.ts";
 import { NavigationMain } from "@/templates/NavigationMain.tsx";
 
 export const Route = createRootRoute({
@@ -9,8 +9,14 @@ export const Route = createRootRoute({
 });
 
 function RouteComponent() {
-	const { isFetching } = useQuery(optionsUserLoad);
-	if (isFetching) {
+	const { token } = useUserStore();
+	useEffect(() => {
+		UserStore.load();
+		return () => {
+			UserStore.abort();
+		};
+	}, []);
+	if (!token) {
 		return (
 			<LoadingMask />
 		);

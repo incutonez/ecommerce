@@ -1,13 +1,13 @@
 import { ImageEntity, ProductListEntity } from "@incutonez/ecommerce-spec";
 import { Link } from "@tanstack/react-router";
 import classNames from "classnames";
-import { IconAdd, IconRemove } from "@/assets/icons.tsx";
+import { IconAdd, IconDelete, IconRemove } from "@/assets/icons.tsx";
 import { BaseButton } from "@/components/BaseButton.tsx";
 import { ProductPrice } from "@/components/ProductPrice.tsx";
 import { RatingStars } from "@/components/RatingStars.tsx";
 import { ContextProductRecord, useProductRecord } from "@/contexts.ts";
 import { RouteViewProduct } from "@/routes.ts";
-import { CartTotalStore, useCartItemTotal } from "@/stores/cartTotal.ts";
+import { CartTotalStore, useCartItemTotal } from "@/stores/CartTotal.ts";
 import { getImageUrl } from "@/utils.ts";
 
 export interface IProductTile {
@@ -72,22 +72,32 @@ export function ProductCartButtons({ productId }: IProductCartButtons) {
 		CartTotalStore.cartRemove(productId);
 	}
 
+	function onClickDelete() {
+		CartTotalStore.cartUpdateCount(productId, 0);
+	}
+
 	if (cartTotal) {
 		return (
-			<section className="flex items-center justify-between">
+			<section className="flex w-full space-x-2">
 				<BaseButton
-					icon={IconRemove}
-					onClick={onClickCartRemove}
+					icon={IconDelete}
+					onClick={onClickDelete}
 				/>
-				<span className="text-sm">
-					{cartTotal}
-					{" "}
-					in cart
-				</span>
-				<BaseButton
-					icon={IconAdd}
-					onClick={onClickCartAdd}
-				/>
+				<section className="flex flex-1 items-center justify-between">
+					<BaseButton
+						icon={IconRemove}
+						onClick={onClickCartRemove}
+					/>
+					<span className="text-sm">
+						{cartTotal}
+						{" "}
+						in cart
+					</span>
+					<BaseButton
+						icon={IconAdd}
+						onClick={onClickCartAdd}
+					/>
+				</section>
 			</section>
 		);
 	}

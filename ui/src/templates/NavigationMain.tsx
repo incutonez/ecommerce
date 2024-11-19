@@ -5,7 +5,7 @@ import { BaseButton } from "@/components/BaseButton.tsx";
 import { FieldComboBox } from "@/components/FieldComboBox.tsx";
 import { optionsCategories } from "@/hooks/categories.ts";
 import { RouteHome, RouteViewCart } from "@/routes.ts";
-import { useCart } from "@/stores/cartTotal.ts";
+import { useCart } from "@/stores/CartTotal.ts";
 
 export function NavigationMain() {
 	const categories = useQuery(optionsCategories);
