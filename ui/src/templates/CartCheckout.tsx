@@ -1,4 +1,6 @@
+import { Link } from "@tanstack/react-router";
 import { BaseButton } from "@/components/BaseButton.tsx";
+import { RouteViewProduct } from "@/routes.ts";
 import { useCartCheckout } from "@/stores/CartCheckout.ts";
 import { ProductCartButtons, ProductDescription, ProductImage } from "@/templates/ProductTile.tsx";
 import { toCurrency, toPercent, uniqueKey } from "@/utils.ts";
@@ -17,10 +19,17 @@ export function CheckoutItems() {
 					size="size-32"
 				/>
 				<section className="flex flex-1 flex-col space-y-1">
-					<span className="font-semibold">
-						{product.name}
-					</span>
-					<ProductDescription description={product.description} />
+					<Link
+						to={RouteViewProduct}
+						params={{
+							productId: product.id!,
+						}}
+					>
+						<span className="font-semibold hover:text-sky-800">
+							{product.name}
+						</span>
+						<ProductDescription description={product.description} />
+					</Link>
 					<span className="!mt-auto flex items-center">
 						<span className="font-semibold">
 							{toCurrency(product.price * count)}

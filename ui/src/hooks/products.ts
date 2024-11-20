@@ -31,6 +31,7 @@ export function optionsProduct(productId: string) {
 	return queryOptions({
 		staleTime: Infinity,
 		queryKey: ["Product", productId],
+		retry: false,
 		queryFn: async () => {
 			const { data } = await ProductsAPI.getProduct(productId);
 			return data;

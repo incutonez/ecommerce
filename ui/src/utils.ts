@@ -1,3 +1,5 @@
+import pluralize from "pluralize";
+
 const currencyFormatter = new Intl.NumberFormat(navigator.languages, {
 	style: "currency",
 	/* Always displays in USD, as that's how the values are stored... would need some sort of API converter if needing to
@@ -28,4 +30,8 @@ export function toPercent(value: number) {
 
 export function uniqueKey(parent: string, id: string | number) {
 	return `${parent}_${id}`;
+}
+
+export function makePlural(word: string, count?: number, showBefore?: boolean) {
+	return pluralize(word, count, showBefore);
 }

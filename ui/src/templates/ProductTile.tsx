@@ -46,10 +46,11 @@ export interface IProductDescription {
 	description: string;
 	clamp?: string;
 	className?: string;
+	clickable?: boolean;
 }
 
-export function ProductDescription({ clamp = "line-clamp-2", className = "", description }: IProductDescription) {
-	className = classNames("text-sm hover:text-sky-800", clamp, className);
+export function ProductDescription({ clamp = "line-clamp-2", clickable = true, className = "", description }: IProductDescription) {
+	className = classNames("text-sm", clickable ? "hover:text-sky-800" : "", clamp, className);
 	return (
 		<p className={className}>
 			{description}
@@ -59,9 +60,10 @@ export function ProductDescription({ clamp = "line-clamp-2", className = "", des
 
 export interface IProductCartButtons {
 	productId: string;
+	alwaysShow?: boolean;
 }
 
-export function ProductCartButtons({ productId }: IProductCartButtons) {
+export function ProductCartButtons({ productId, alwaysShow = false }: IProductCartButtons) {
 	const cartTotal = useCartItemTotal(productId);
 
 	function onClickCartAdd() {
@@ -76,17 +78,19 @@ export function ProductCartButtons({ productId }: IProductCartButtons) {
 		CartTotalStore.cartUpdateCount(productId, 0);
 	}
 
-	if (cartTotal) {
+	if (cartTotal || alwaysShow) {
 		return (
 			<section className="flex w-full space-x-2">
 				<BaseButton
 					icon={IconDelete}
 					onClick={onClickDelete}
+					disabled={!cartTotal}
 				/>
 				<section className="flex flex-1 items-center justify-between">
 					<BaseButton
 						icon={IconRemove}
 						onClick={onClickCartRemove}
+						disabled={!cartTotal}
 					/>
 					<span className="text-sm">
 						{cartTotal}

@@ -21,3 +21,21 @@ export { default as IconAdd } from "@material-symbols/svg-400/outlined/add.svg?r
 export { default as IconRemove } from "@material-symbols/svg-400/outlined/remove.svg?react";
 
 export { default as IconDelete } from "@material-symbols/svg-400/outlined/delete.svg?react";
+
+export { default as IconError } from "@material-symbols/svg-400/outlined/error.svg?react";
+
+export { default as IconFaceOne } from "@material-symbols/svg-400/outlined/face.svg?react";
+
+export { default as IconFaceTwo } from "@material-symbols/svg-400/outlined/face_2.svg?react";
+
+export { default as IconFaceThree } from "@material-symbols/svg-400/outlined/face_3.svg?react";
+
+export { default as IconFaceFour } from "@material-symbols/svg-400/outlined/face_4.svg?react";
+
+export { default as IconFaceFive } from "@material-symbols/svg-400/outlined/face_5.svg?react";
+
+export { default as IconFaceSix } from "@material-symbols/svg-400/outlined/face_6.svg?react";
+
+export { default as IconCollapse } from "@material-symbols/svg-400/outlined/unfold_less.svg?react";
+
+export { default as IconExpand } from "@material-symbols/svg-400/outlined/unfold_more.svg?react";
