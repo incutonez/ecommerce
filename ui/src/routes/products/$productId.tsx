@@ -102,6 +102,7 @@ function ProductReview({ record, ...attrs }: IProductReview) {
 		if (ref.current?.clientHeight) {
 			setContentHeight(ref.current.clientHeight);
 		}
+		setCollapsed(true);
 	}, []);
 
 	return (
