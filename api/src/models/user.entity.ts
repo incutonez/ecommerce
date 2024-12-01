@@ -1,4 +1,5 @@
 import { AddressEntity } from "src/models/address.entity";
+import { ReviewUserEntity } from "src/models/review.entity";
 
 export class UserEntity {
 	id?: string;
@@ -9,4 +10,5 @@ export class UserEntity {
 	birthDate?: number;
 	gender?: string;
 	address?: AddressEntity;
+	reviews?: ReviewUserEntity[];
 }

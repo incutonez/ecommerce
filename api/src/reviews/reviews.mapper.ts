@@ -1,6 +1,7 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, OnModuleInit } from "@nestjs/common";
+import { ModuleRef } from "@nestjs/core";
 import { ReviewModel } from "src/db/models/ReviewModel";
-import { ReviewEntity } from "src/models/review.entity";
+import { ReviewEntity, ReviewUserEntity } from "src/models/review.entity";
 import { UsersMapper } from "src/users/users.mapper";
 
 export function calculateRating(reviews: ReviewModel[]) {
@@ -18,8 +19,23 @@ export function calculateRating(reviews: ReviewModel[]) {
 }
 
 @Injectable()
-export class ReviewsMapper {
-	constructor(private readonly usersMapper: UsersMapper) {
+export class ReviewsMapper implements OnModuleInit {
+	private usersMapper: UsersMapper;
+
+	constructor(private readonly moduleRef: ModuleRef) {
+	}
+
+	/**
+	 * Because UsersModule depends on ReviewsModule and ReviewsModule depends on UsersModule, we have to do a dynamic
+	 * dependency injection because it's a circular dep.  In order to do this, we have to leverage their ModuleRef class
+	 * and use forwardRef when defining the import in each module.
+	 * Source: https://docs.nestjs.com/fundamentals/circular-dependency#module-forward-reference
+	 * Source: https://docs.nestjs.com/fundamentals/module-ref
+	 */
+	onModuleInit() {
+		this.usersMapper = this.moduleRef.get(UsersMapper, {
+			strict: false,
+		});
 	}
 
 	modelToViewModel({ id, title, description, rating, created_date, created_by_user }: ReviewModel): ReviewEntity {
@@ -29,7 +45,19 @@ export class ReviewsMapper {
 			description,
 			rating,
 			createdDate: created_date,
-			createdBy: this.usersMapper.userToViewModel(created_by_user),
+			createdBy: created_by_user ? this.usersMapper.userToViewModel(created_by_user) : undefined,
+		};
+	}
+
+	modelForUserViewModel({ id, title, description, rating, created_date, product, product_id }: ReviewModel): ReviewUserEntity {
+		return {
+			id,
+			title,
+			description,
+			rating,
+			createdDate: created_date,
+			productId: product_id,
+			productName: product.name,
 		};
 	}
 }

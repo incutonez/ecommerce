@@ -58,6 +58,6 @@ export interface ReviewEntity {
      * @type {UserEntity}
      * @memberof ReviewEntity
      */
-    'createdBy': UserEntity;
+    'createdBy'?: UserEntity;
 }
 

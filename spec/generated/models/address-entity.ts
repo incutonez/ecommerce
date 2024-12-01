@@ -22,10 +22,10 @@
 export interface AddressEntity {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof AddressEntity
      */
-    'id'?: number;
+    'id'?: string;
     /**
      * 
      * @type {string}

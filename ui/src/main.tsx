@@ -7,13 +7,6 @@ import axios, { isCancel } from "axios";
 import { queryClient } from "@/hooks/api.ts";
 import { routeTree } from "@/routeTree.gen.ts";
 
-/**
- * TODOJEF:
- * - Wiring up the search and get the results page working
- * - Add a users page/table component
- * - Add a user tooltip that shows some minimized profile details and a link to their page
- * -- Their page should show a list of their reviews
- */
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {
 	interface Register {

@@ -1,7 +1,7 @@
-import { BaseHTMLAttributes, useEffect, useRef, useState } from "react";
-import { ProductEntity, ReviewEntity } from "@incutonez/ecommerce-spec";
+import { BaseHTMLAttributes, ReactNode, useEffect, useRef, useState } from "react";
+import { ReviewEntity, ReviewUserEntity } from "@incutonez/ecommerce-spec";
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { IconCollapse, IconExpand } from "@/assets/icons.tsx";
 import { AvatarUser } from "@/components/AvatarUser.tsx";
 import { BaseButton } from "@/components/BaseButton.tsx";
@@ -13,7 +13,16 @@ import { RouteViewProduct } from "@/routes.ts";
 import { useCartItemTotal } from "@/stores/CartTotal.ts";
 import { NotFound } from "@/templates/NotFound.tsx";
 import { ProductCartButtons, ProductDescription, ProductImage } from "@/templates/ProductTile.tsx";
+import { isReviewEntity, isReviewUserEntity } from "@/types.ts";
 import { makePlural, toCurrency, uniqueKey } from "@/utils.ts";
+
+interface IProductReviews {
+	reviews?: ReviewEntity[];
+}
+
+interface IProductReview extends BaseHTMLAttributes<HTMLElement> {
+	record: ReviewEntity | ReviewUserEntity;
+}
 
 export const Route = createFileRoute(RouteViewProduct)({
 	component: RouteComponent,
@@ -73,26 +82,41 @@ function RouteComponent() {
 					</div>
 				</section>
 			</section>
-			<ProductReviews product={data} />
+			<ProductReviews reviews={data.reviews} />
 		</article>
 	);
 }
 
-interface IProductReviews {
-	product: ProductEntity;
-}
-
-interface IProductReview extends BaseHTMLAttributes<HTMLElement> {
-	record: ReviewEntity;
-}
-
-function ProductReview({ record, ...attrs }: IProductReview) {
+export function ProductReview({ record, ...attrs }: IProductReview) {
 	const ref = useRef<HTMLParagraphElement>(null);
 	const [collapsed, setCollapsed] = useState(false);
 	const [contentHeight, setContentHeight] = useState<number>();
 	const collapseIcon = collapsed ? IconExpand : IconCollapse;
 	const collapseTitle = collapsed ? "Expand" : "Collapse";
 	const descriptionHeight = collapsed ? 0 : contentHeight;
+	let createdBy: ReactNode;
+	if (isReviewEntity(record)) {
+		createdBy = (
+			<AvatarUser
+				random={true}
+				name={record.createdBy?.firstName}
+				userId={record.createdBy?.id}
+			/>
+		);
+	}
+	else if (isReviewUserEntity(record)) {
+		createdBy = (
+			<Link
+				className="font-bold hover:text-sky-800"
+				to={RouteViewProduct}
+				params={{
+					productId: record.productId,
+				}}
+			>
+				{record.productName}
+			</Link>
+		);
+	}
 
 	function onClickCollapse() {
 		setCollapsed(!collapsed);
@@ -110,16 +134,11 @@ function ProductReview({ record, ...attrs }: IProductReview) {
 			{...attrs}
 			className="flex flex-col space-y-2 rounded border bg-white p-4"
 		>
-			<section className="flex items-center justify-between">
+			<section className="flex items-center justify-between space-x-2">
 				<section className="flex flex-col">
-					<section className="flex justify-between">
-						<AvatarUser
-							random={true}
-							name={record.createdBy.firstName}
-						/>
-					</section>
+					{createdBy}
 					<span className="flex items-center space-x-2">
-						<h2 className="font-bold">
+						<h2 className="line-clamp-1">
 							{record.title}
 						</h2>
 						<RatingStars rating={record.rating} />
@@ -144,8 +163,8 @@ function ProductReview({ record, ...attrs }: IProductReview) {
 	);
 }
 
-function ProductReviews({ product }: IProductReviews) {
-	const reviewNodes = product.reviews.map((review) => {
+export function ProductReviewNodes({ reviews }: IProductReviews) {
+	const nodes = reviews?.map((review) => {
 		return (
 			<ProductReview
 				key={uniqueKey("product-reviews", review.id!)}
@@ -154,10 +173,21 @@ function ProductReviews({ product }: IProductReviews) {
 		);
 	});
 	return (
+		<>
+			{nodes}
+		</>
+	);
+}
+
+export function ProductReviews({ reviews }: IProductReviews) {
+	if (!reviews) {
+		return;
+	}
+	return (
 		<article className="mt-4 flex flex-col space-y-2">
 			<h1 className="text-2xl font-semibold">Reviews:</h1>
 			<section className="flex flex-col space-y-4">
-				{reviewNodes}
+				<ProductReviewNodes reviews={reviews} />
 			</section>
 		</article>
 	);

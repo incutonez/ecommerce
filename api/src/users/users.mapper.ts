@@ -1,19 +1,46 @@
+import { Injectable, OnModuleInit } from "@nestjs/common";
+import { ModuleRef } from "@nestjs/core";
 import { AddressModel, IAddressModel } from "src/db/models/AddressModel";
 import { IUserModel, UserModel } from "src/db/models/UserModel";
 import { AddressEntity } from "src/models/address.entity";
 import { UserEntity } from "src/models/user.entity";
+import { ReviewsMapper } from "src/reviews/reviews.mapper";
 
-export class UsersMapper {
-	userToViewModel(user: UserModel): UserEntity {
+@Injectable()
+export class UsersMapper implements OnModuleInit {
+	private reviewsMapper: ReviewsMapper;
+
+	constructor(private readonly moduleRef: ModuleRef) {
+	}
+
+	/**
+	 * Because UsersModule depends on ReviewsModule and ReviewsModule depends on UsersModule, we have to do a dynamic
+	 * dependency injection because it's a circular dep.  In order to do this, we have to leverage their ModuleRef class
+	 * and use forwardRef when defining the import in each module.
+	 * Source: https://docs.nestjs.com/fundamentals/circular-dependency#module-forward-reference
+	 * Source: https://docs.nestjs.com/fundamentals/module-ref
+	 */
+	onModuleInit() {
+		this.reviewsMapper = this.moduleRef.get(ReviewsMapper, {
+			strict: false,
+		});
+	}
+
+	userToViewModel(model: UserModel): UserEntity {
+		// We have to convert to a plain object because otherwise, the data is nested
+		if (model instanceof UserModel) {
+			model = model.getPlain();
+		}
 		return {
-			id: user.id,
-			firstName: user.first_name,
-			lastName: user.last_name,
-			email: user.email,
-			phone: user.phone,
-			birthDate: user.birth_date,
-			gender: user.gender,
-			address: user.address ? this.addressToViewModel(user.address) : undefined,
+			id: model.id,
+			firstName: model.first_name,
+			lastName: model.last_name,
+			email: model.email,
+			phone: model.phone,
+			birthDate: model.birth_date,
+			gender: model.gender,
+			address: model.address ? this.addressToViewModel(model.address) : undefined,
+			reviews: model.reviews ? model.reviews.map((review) => this.reviewsMapper.modelForUserViewModel(review)) : undefined,
 		};
 	}
 

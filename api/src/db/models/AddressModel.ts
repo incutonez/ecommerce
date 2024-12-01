@@ -11,20 +11,20 @@ export type IAddressModel = ModelInterface<AddressModel>;
 })
 export class AddressModel extends BaseModel {
 	@PrimaryKeyGuid()
-	declare id: number;
+	declare id: string;
 
 	@Column
-	line_one: string;
+	declare line_one: string;
 
 	@Column
-	line_two: string;
+	declare line_two: string;
 
 	@Column
-	city: string;
+	declare city: string;
 
 	@Column
-	state: string;
+	declare state: string;
 
 	@Column
-	zip_code: string;
+	declare zip_code: string;
 }

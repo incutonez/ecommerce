@@ -1,7 +1,8 @@
-import { BelongsTo, Column, ForeignKey, Table } from "sequelize-typescript";
+import { BelongsTo, Column, ForeignKey, HasMany, Table } from "sequelize-typescript";
 import { PrimaryKeyGuid } from "src/db/decorators";
 import { AddressModel } from "src/db/models/AddressModel";
 import { BaseModel } from "src/db/models/BaseModel";
+import { ReviewModel } from "src/db/models/ReviewModel";
 import { ModelInterface } from "src/types";
 
 export type IUserModel = ModelInterface<UserModel>;
@@ -34,8 +35,11 @@ export class UserModel extends BaseModel {
 
 	@ForeignKey(() => AddressModel)
 	@Column
-	declare address_id?: number;
+	declare address_id?: string;
 
-	@BelongsTo(() => AddressModel)
+	@BelongsTo(() => AddressModel, "address_id")
 	address?: AddressModel;
+
+	@HasMany(() => ReviewModel, "created_by")
+	reviews?: ReviewModel[];
 }

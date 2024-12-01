@@ -10,6 +10,7 @@ export const queryClient = new QueryClient({
 			 * below, after 10 seconds of not using that query, the fetched data is cleared from the cache */
 			staleTime: Infinity,
 			gcTime: 10000,
+			retry: false,
 		},
 	},
 });

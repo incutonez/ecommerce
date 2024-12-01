@@ -19,6 +19,7 @@ export * from './product-list-entity';
 export * from './product-response-model';
 export * from './profile-entity';
 export * from './review-entity';
+export * from './review-user-entity';
 export * from './user-entity';
 export * from './user-response-model';
 export * from './version-entity';

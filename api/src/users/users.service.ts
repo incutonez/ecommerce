@@ -15,13 +15,7 @@ export class UsersService {
 	async listUsers({ start = 0, limit = 20, filters = [] }: ApiPaginatedRequest) {
 		const query: FindAndCountOptions<UserModel> = {
 			limit,
-			raw: true,
 			offset: start,
-			include: [
-				{
-					all: true,
-				},
-			],
 		};
 		filters.forEach(({ type, value }) => {
 			if (type === EnumFilterType.Search) {
@@ -37,13 +31,13 @@ export class UsersService {
 
 	async getUser(userId: string) {
 		const response = await UserModel.findOne({
-			raw: true,
 			where: {
 				id: userId,
 			},
 			include: [
 				{
 					all: true,
+					nested: true,
 				},
 			],
 		});

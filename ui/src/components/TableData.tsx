@@ -1,6 +1,6 @@
 import { ComponentProps, ReactNode, useState } from "react";
 import classNames from "classnames";
-import { getValue, uniqueKey } from "@/utils.ts";
+import { emptyFn, getValue, uniqueKey } from "@/utils.ts";
 
 let tableCount = 1;
 
@@ -11,11 +11,17 @@ export interface ITableColumnProp<T = never> {
 	renderer?: (record: T) => ReactNode;
 }
 
+export interface IEventRowClick<T = never> {
+	record: T;
+	index: number;
+}
+
 export type ITableData<T = never> = ComponentProps<"table"> & {
 	headerNodes?: ReactNode;
 	rowNodes?: ReactNode;
 	columns?: ITableColumnProp<T>[];
 	data?: T[];
+	clickRow?: (props: IEventRowClick<T>) => void;
 }
 
 export type ITableColumn = ComponentProps<"th"> & {
@@ -26,8 +32,16 @@ export type ITableCell = ComponentProps<"td"> & {
 	text?: string | number;
 }
 
-export function TableData<T>({ children, headerNodes, rowNodes, columns, data = [] }: ITableData<T>) {
+export function TableData<T>({ children, headerNodes, rowNodes, columns, data = [], clickRow = emptyFn }: ITableData<T>) {
 	const [tableId] = useState(`table${tableCount++}`);
+
+	function onClickRow(record: T, rowIdx: number) {
+		clickRow({
+			record,
+			index: rowIdx,
+		});
+	}
+
 	if (columns) {
 		headerNodes = columns.map((column, colIdx) => {
 			const colId = uniqueKey(tableId, `col${colIdx}`);
@@ -61,7 +75,10 @@ export function TableData<T>({ children, headerNodes, rowNodes, columns, data = 
 					));
 				});
 				return (
-					<TableRow key={rowId}>
+					<TableRow
+						key={rowId}
+						onClick={() => onClickRow(record, rowIdx)}
+					>
 						{cellNodes}
 					</TableRow>
 				);
@@ -117,9 +134,12 @@ export function TableBody({ children }: ComponentProps<"tbody">) {
 	);
 }
 
-export function TableRow({ children }: ComponentProps<"tr">) {
+export function TableRow({ children, onClick }: ComponentProps<"tr">) {
 	return (
-		<tr className="border-b border-gray-300 hover:bg-blue-100">
+		<tr
+			className="border-b border-gray-300 hover:bg-blue-100"
+			onClick={onClick}
+		>
 			{children}
 		</tr>
 	);

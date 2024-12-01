@@ -8,6 +8,7 @@ export const Route = createFileRoute(RouteViewProducts)({
 	component: RouteComponent,
 });
 
+// TODOJEF: Wiring up the products search and get the results page working
 function RouteComponent() {
 	const api = usePaginatedApi();
 	return (

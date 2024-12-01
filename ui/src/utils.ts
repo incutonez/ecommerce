@@ -49,3 +49,7 @@ export function makePlural(word: string, count?: number, showBefore?: boolean) {
 export function getValue(value: any, key: string | string[]) {
 	return get(value, key);
 }
+
+export function emptyFn() {
+
+}

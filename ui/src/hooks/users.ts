@@ -20,3 +20,13 @@ export function useLoadUsers() {
 		},
 	});
 }
+
+export function useLoadUser(userId: string) {
+	return queryOptions({
+		queryKey: ["user", userId],
+		async queryFn() {
+			const { data } = await UsersAPI.getUser(userId);
+			return data;
+		},
+	});
+}

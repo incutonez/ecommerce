@@ -1,7 +1,16 @@
 import { useSyncExternalStore } from "react";
+import { ReviewEntity, ReviewUserEntity } from "@incutonez/ecommerce-spec";
 
 export type TSubscribeListener = () => void;
 
 export type ExtStoreSub = Parameters<typeof useSyncExternalStore>[0];
 
 export type ExtStoreSubParam = Parameters<ExtStoreSub>[0];
+
+export function isReviewEntity(record: ReviewEntity | ReviewUserEntity): record is ReviewEntity {
+	return "createdBy" in record;
+}
+
+export function isReviewUserEntity(record: ReviewEntity | ReviewUserEntity): record is ReviewUserEntity {
+	return "productName" in record;
+}

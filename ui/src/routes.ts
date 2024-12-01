@@ -6,6 +6,6 @@ export const RouteViewProduct = `${RouteViewProducts}$productId`;
 
 export const RouteViewCart = "/cart/";
 
-export const RouteViewUsers = "/users/";
+export const RouteViewUsers = "/users";
 
-export const RouteViewUser = `${RouteViewUsers}$userId`;
+export const RouteViewUser = `${RouteViewUsers}/$userId`;

@@ -1,5 +1,5 @@
 export class AddressEntity {
-	id?: number;
+	id?: string;
 	lineOne: string;
 	lineTwo?: string;
 	city: string;

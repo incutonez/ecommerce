@@ -68,7 +68,7 @@ export default tseslint.config(...tailwind.configs["flat/recommended"], {
 			named: "never",
 			asyncArrow: "always",
 		}],
-		"function-call-argument-newline": ["error", "never"],
+		"function-call-argument-newline": ["error", "consistent"],
 		"function-paren-newline": ["error", "never"],
 		"no-mixed-spaces-and-tabs": "off",
 		"no-var": "error",

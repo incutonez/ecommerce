@@ -33,5 +33,8 @@ export class ReviewModel extends BaseModel {
   declare product_id: string;
 
   @BelongsTo(() => UserModel, "created_by")
-  created_by_user: UserModel;
+  created_by_user?: UserModel;
+
+  @BelongsTo(() => ProductModel, "product_id")
+  product?: ProductModel;
 }

@@ -36,6 +36,7 @@ models/product-list-entity.ts
 models/product-response-model.ts
 models/profile-entity.ts
 models/review-entity.ts
+models/review-user-entity.ts
 models/user-entity.ts
 models/user-response-model.ts
 models/version-entity.ts

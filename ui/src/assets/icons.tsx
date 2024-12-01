@@ -47,3 +47,5 @@ export { default as IconExpand } from "@material-symbols/svg-400/outlined/unfold
 export { default as IconUsers } from "@material-symbols/svg-400/outlined/groups.svg?react";
 
 export { default as IconBirthday } from "@material-symbols/svg-400/outlined/cake.svg?react";
+
+export { default as IconClose } from "@material-symbols/svg-400/outlined/close.svg?react";
