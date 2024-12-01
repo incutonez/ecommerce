@@ -1,3 +1,7 @@
+import { FunctionComponent, SVGProps } from "react";
+
+export type IIcon = FunctionComponent<SVGProps<SVGSVGElement>>;
+
 export { default as IconPrevious } from "@material-symbols/svg-400/outlined/chevron_left.svg?react";
 
 export { default as IconNext } from "@material-symbols/svg-400/outlined/chevron_right.svg?react";
@@ -39,3 +43,7 @@ export { default as IconFaceSix } from "@material-symbols/svg-400/outlined/face_
 export { default as IconCollapse } from "@material-symbols/svg-400/outlined/unfold_less.svg?react";
 
 export { default as IconExpand } from "@material-symbols/svg-400/outlined/unfold_more.svg?react";
+
+export { default as IconUsers } from "@material-symbols/svg-400/outlined/groups.svg?react";
+
+export { default as IconBirthday } from "@material-symbols/svg-400/outlined/cake.svg?react";

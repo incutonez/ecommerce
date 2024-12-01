@@ -1,4 +1,12 @@
-import { AuthApi, CartItemsApi, CategoriesApi, Configuration, ImagesApi, ProductsApi } from "@incutonez/ecommerce-spec";
+import {
+	AuthApi,
+	CartItemsApi,
+	CategoriesApi,
+	Configuration,
+	ImagesApi,
+	ProductsApi,
+	UsersApi,
+} from "@incutonez/ecommerce-spec";
 
 export const configuration = new Configuration({
 	basePath: import.meta.env.VITE_BASE_API,
@@ -16,3 +24,5 @@ export const ImagesAPI = new ImagesApi(configuration);
 export const AuthAPI = new AuthApi(configuration);
 
 export const CartItemsAPI = new CartItemsApi(configuration);
+
+export const UsersAPI = new UsersApi(configuration);

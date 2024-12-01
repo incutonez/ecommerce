@@ -1,5 +1,11 @@
+import get from "just-safe-get";
 import pluralize from "pluralize";
 
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+	month: "2-digit",
+	day: "2-digit",
+	year: "numeric",
+});
 const currencyFormatter = new Intl.NumberFormat(navigator.languages, {
 	style: "currency",
 	/* Always displays in USD, as that's how the values are stored... would need some sort of API converter if needing to
@@ -19,6 +25,10 @@ export function getPrice(value: number) {
 	};
 }
 
+export function toBirthDate(value: number | Date | undefined) {
+	return dateFormatter.format(value);
+}
+
 export function toCurrency(value: number) {
 	return currencyFormatter.format(value);
 }
@@ -34,4 +44,8 @@ export function uniqueKey(parent: string, id: string | number) {
 
 export function makePlural(word: string, count?: number, showBefore?: boolean) {
 	return pluralize(word, count, showBefore);
+}
+
+export function getValue(value: any, key: string | string[]) {
+	return get(value, key);
 }

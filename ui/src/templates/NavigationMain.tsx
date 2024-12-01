@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { IconCartCheckout, IconSearch } from "@/assets/icons.tsx";
+import { IconCartCheckout, IconSearch, IconUsers } from "@/assets/icons.tsx";
 import { BaseButton } from "@/components/BaseButton.tsx";
 import { FieldComboBox } from "@/components/FieldComboBox.tsx";
 import { optionsCategories } from "@/hooks/categories.ts";
-import { RouteHome, RouteViewCart } from "@/routes.ts";
+import { RouteHome, RouteViewCart, RouteViewUsers } from "@/routes.ts";
 import { useCart } from "@/stores/CartTotal.ts";
 
 export function NavigationMain() {
@@ -36,19 +36,27 @@ export function NavigationMain() {
 					iconCls="size-full"
 				/>
 			</section>
-			<Link
-				to={RouteViewCart}
-				className="ml-auto"
-			>
-				<BaseButton
-					className="text-lg font-semibold"
-					size="h-10"
-					icon={IconCartCheckout}
-					iconCls="size-8"
-					title="Checkout"
-					text={cartText}
-				/>
-			</Link>
+			<section className="ml-auto flex space-x-2">
+				<Link to={RouteViewUsers}>
+					<BaseButton
+						className="text-lg font-semibold"
+						size="h-10"
+						icon={IconUsers}
+						iconCls="size-8"
+						title="Users"
+					/>
+				</Link>
+				<Link to={RouteViewCart}>
+					<BaseButton
+						className="text-lg font-semibold"
+						size="h-10"
+						icon={IconCartCheckout}
+						iconCls="size-8"
+						title="Checkout"
+						text={cartText}
+					/>
+				</Link>
+			</section>
 		</nav>
 	);
 }
