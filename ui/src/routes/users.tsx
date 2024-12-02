@@ -1,11 +1,12 @@
 import { UserEntity } from "@incutonez/ecommerce-spec";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
-import { LoadingMask } from "@/components/LoadingMask.tsx";
-import { IEventRowClick, ITableColumnProp, TableData } from "@/components/TableData.tsx";
+import { TableData } from "@/components/TableData.tsx";
+import { usePaginatedApi } from "@/hooks/api.ts";
 import { useLoadUsers } from "@/hooks/users.ts";
 import { RouteViewUser, RouteViewUsers } from "@/routes.ts";
 import { UserBirthDate, UserGender } from "@/templates/Users.tsx";
+import { IEventRowClick, ITableColumnProp } from "@/types/TableData.ts";
 
 export const Route = createFileRoute(RouteViewUsers)({
 	component: RouteComponent,
@@ -13,10 +14,8 @@ export const Route = createFileRoute(RouteViewUsers)({
 
 function RouteComponent() {
 	const navigate = useNavigate();
-	const { isFetching, data = [] } = useQuery(useLoadUsers());
-	if (isFetching) {
-		return <LoadingMask />;
-	}
+	const paginatedApi = usePaginatedApi();
+	const { isFetching, data = [] } = useQuery(useLoadUsers(paginatedApi));
 	const columns: ITableColumnProp<UserEntity>[] = [{
 		title: "First Name",
 		field: "firstName",
@@ -26,6 +25,7 @@ function RouteComponent() {
 	}, {
 		title: "Email",
 		field: "email",
+		truncate: true,
 	}, {
 		title: "Phone",
 		field: "phone",
@@ -59,8 +59,11 @@ function RouteComponent() {
 	return (
 		<>
 			<TableData
+				className="size-full"
 				columns={columns}
 				data={data}
+				paginatedApi={paginatedApi}
+				loading={isFetching}
 				clickRow={onClickRow}
 			/>
 			<Outlet />

@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { FilterType } from "src/enums.entity";
+import { FilterType, SortType } from "src/enums.entity";
 
 interface IResponseListEntity<T> {
 	data: T[];
@@ -11,6 +11,7 @@ export class ApiPaginatedRequest {
 	limit: number;
 	page: number;
 	filters?: FilterType[];
+	sorters?: SortType[];
 }
 
 export function GetResponseModel<T>(ResourceClass) {

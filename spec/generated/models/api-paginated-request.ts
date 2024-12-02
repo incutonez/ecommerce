@@ -16,6 +16,9 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import { FilterType } from './filter-type';
+// May contain unused imports in some cases
+// @ts-ignore
+import { SortType } from './sort-type';
 
 /**
  * 
@@ -47,5 +50,11 @@ export interface ApiPaginatedRequest {
      * @memberof ApiPaginatedRequest
      */
     'filters'?: Array<FilterType>;
+    /**
+     * 
+     * @type {Array<SortType>}
+     * @memberof ApiPaginatedRequest
+     */
+    'sorters'?: Array<SortType>;
 }
 

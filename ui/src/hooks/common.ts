@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { IOption } from "@/types.ts";
 
 /**
  * Taken from https://overreacted.io/making-setinterval-declarative-with-react-hooks/
@@ -23,4 +24,8 @@ export function useInterval(callback: () => void, delay: number | null = 2000) {
 			return () => clearInterval(id);
 		}
 	}, [delay]);
+}
+
+export function useSelection<T = IOption>(selected?: T) {
+	return useState<T | undefined>(selected);
 }

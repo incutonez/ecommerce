@@ -27,6 +27,7 @@ models/cart-response-model.ts
 models/category-entity.ts
 models/category-response-model.ts
 models/enum-filter-type.ts
+models/enum-sort-type.ts
 models/filter-type-value.ts
 models/filter-type.ts
 models/image-entity.ts
@@ -37,6 +38,7 @@ models/product-response-model.ts
 models/profile-entity.ts
 models/review-entity.ts
 models/review-user-entity.ts
+models/sort-type.ts
 models/user-entity.ts
 models/user-response-model.ts
 models/version-entity.ts

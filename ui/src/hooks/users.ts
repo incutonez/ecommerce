@@ -1,18 +1,24 @@
 import { queryOptions } from "@tanstack/react-query";
 import { UsersAPI } from "@/apiConfig.ts";
-import { usePaginatedApi } from "@/hooks/api.ts";
+import { TPaginatedApi } from "@/hooks/api.ts";
 
-export function useLoadUsers() {
-	const { limit, filters, page, setLoading, setTotal } = usePaginatedApi();
+export function useLoadUsers({ limit, filters, page, setLoading, setTotal, sorters }: TPaginatedApi) {
 	return queryOptions({
-		queryKey: ["users", limit, filters, page],
+		queryKey: [
+			"users",
+			limit,
+			filters,
+			page,
+			sorters,
+		],
 		async queryFn() {
 			setLoading(true);
 			const { data } = await UsersAPI.listUsers({
+				start: 0,
 				page,
 				limit,
 				filters,
-				start: 0,
+				sorters,
 			});
 			setTotal(data.total ?? 0);
 			setLoading(false);

@@ -49,3 +49,7 @@ export { default as IconUsers } from "@material-symbols/svg-400/outlined/groups.
 export { default as IconBirthday } from "@material-symbols/svg-400/outlined/cake.svg?react";
 
 export { default as IconClose } from "@material-symbols/svg-400/outlined/close.svg?react";
+
+export { default as IconSort } from "@material-symbols/svg-400/outlined/sort.svg?react";
+
+export { default as IconArrowDown } from "@material-symbols/svg-400/outlined/south.svg?react";

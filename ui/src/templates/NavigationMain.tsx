@@ -4,11 +4,13 @@ import { IconCartCheckout, IconSearch, IconUsers } from "@/assets/icons.tsx";
 import { BaseButton } from "@/components/BaseButton.tsx";
 import { FieldComboBox } from "@/components/FieldComboBox.tsx";
 import { optionsCategories } from "@/hooks/categories.ts";
+import { useSelection } from "@/hooks/common.ts";
 import { RouteHome, RouteViewCart, RouteViewUsers } from "@/routes.ts";
 import { useCart } from "@/stores/CartTotal.ts";
 
 export function NavigationMain() {
-	const categories = useQuery(optionsCategories);
+	const { data = [] } = useQuery(optionsCategories);
+	const [selectedCategory, setSelectedCategory] = useSelection(data[0]);
 	const { total } = useCart();
 	const cartText = total ? `${total}` : "";
 	return (
@@ -21,7 +23,9 @@ export function NavigationMain() {
 			</Link>
 			<section className="flex">
 				<FieldComboBox
-					options={categories.data ?? []}
+					options={data}
+					selection={selectedCategory}
+					setSelection={setSelectedCategory}
 					className="!h-10 !rounded-r-none"
 				/>
 				<input

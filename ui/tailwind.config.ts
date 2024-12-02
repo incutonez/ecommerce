@@ -9,6 +9,9 @@ export default {
 			transitionProperty: {
 				height: "height",
 			},
+			fontSize: {
+				"2xs": ["0.5rem", "0.5rem"],
+			},
 		},
 	},
 	plugins: [],

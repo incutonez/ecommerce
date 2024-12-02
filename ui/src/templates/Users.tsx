@@ -1,5 +1,5 @@
-import { ComponentProps, ElementType, ReactNode, useEffect, useState } from "react";
-import { AddressEntity, UserEntity } from "@incutonez/ecommerce-spec";
+import { ReactNode, useEffect, useState } from "react";
+import { UserEntity } from "@incutonez/ecommerce-spec";
 import { useQuery } from "@tanstack/react-query";
 import { isToday } from "date-fns";
 import { IconBirthday, IconFaceOne, IconFaceThree, IconFaceTwo, IIcon } from "@/assets/icons.tsx";
@@ -10,45 +10,15 @@ import { LoadingMask } from "@/components/LoadingMask.tsx";
 import { useLoadUser } from "@/hooks/users.ts";
 import { ProductReviewNodes } from "@/routes/products/$productId.tsx";
 import { NotFound } from "@/templates/NotFound.tsx";
+import {
+	IUserAddress, IUserAvatar,
+	IUserBirthDate,
+	IUserDetails,
+	IUserDialog,
+	IUserGender,
+	IViewUser,
+} from "@/types/Users.ts";
 import { emptyFn, toBirthDate } from "@/utils.ts";
-
-export interface IViewUser extends ComponentProps<"article"> {
-	userId: string;
-	/**
-	 * Because we want to load the user in the View, it's possible we're wrapping it in a BaseDialog, so we want to
-	 * communicate back to the parent the loaded value, so we can use it in the title or something
-	 */
-	setUser?: (user: UserEntity) => void;
-}
-
-export interface IUserGender {
-	gender: string | undefined;
-	showGender?: boolean;
-}
-
-export interface IUserBirthDate {
-	birthDate: number | undefined;
-}
-
-export interface IUserAddress {
-	address?: AddressEntity;
-}
-
-export interface IUserDetails {
-	record: UserEntity;
-}
-
-export interface IUserDialog extends IBaseDialog {
-	userId: string;
-}
-
-export interface IUserAvatar {
-	random?: boolean;
-	name?: string;
-	icon?: ElementType;
-	userId?: string;
-	gender?: string;
-}
 
 export function UserGender({ gender, showGender = true }: IUserGender) {
 	let icon: IIcon | undefined;
@@ -87,11 +57,16 @@ export function UserBirthDate({ birthDate }: IUserBirthDate) {
 		const date = new Date(birthDate);
 		date.setFullYear(new Date().getFullYear());
 		if (isToday(date)) {
-			icon = <BaseIcon as={IconBirthday} />;
+			icon = (
+				<BaseIcon
+					className="fill-sky-600"
+					as={IconBirthday}
+				/>
+			);
 		}
 	}
 	return (
-		<div className="flex space-x-1">
+		<div className="flex items-center space-x-1">
 			<span>
 				{toBirthDate(birthDate)}
 			</span>
@@ -171,7 +146,6 @@ export function UserDetails({ record }: IUserDetails) {
 	);
 }
 
-// TODOJEF: PICK UP HERE... WIRE UP REST OF SEARCH USERS API... need pagination and such
 export function ViewUser({ userId, setUser = emptyFn }: IViewUser) {
 	const { isFetching, data } = useQuery(useLoadUser(userId));
 	useEffect(() => {

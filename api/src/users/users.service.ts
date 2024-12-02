@@ -12,10 +12,16 @@ import { UsersMapper } from "src/users/users.mapper";
 export class UsersService {
 	constructor(private readonly mapper: UsersMapper) {}
 
-	async listUsers({ start = 0, limit = 20, filters = [] }: ApiPaginatedRequest) {
+	async listUsers({ page, limit = 20, filters = [], sorters = [] }: ApiPaginatedRequest) {
 		const query: FindAndCountOptions<UserModel> = {
 			limit,
-			offset: start,
+			offset: (page - 1) * limit,
+			order: sorters.map(({ field, direction }) => {
+				if (field === "lastName") {
+					field = "last_name";
+				}
+				return [field.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`), direction];
+			}),
 		};
 		filters.forEach(({ type, value }) => {
 			if (type === EnumFilterType.Search) {
