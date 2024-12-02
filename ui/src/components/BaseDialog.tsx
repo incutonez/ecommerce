@@ -8,14 +8,14 @@ export interface IBaseDialog extends ComponentProps<"article"> {
 	titleSlot?: ReactNode;
 	title?: string;
 	size?: string;
-	show: boolean;
+	show: boolean | undefined;
 	setShow: (show: boolean) => void;
 }
 
 export function BaseDialog({ children, title, show, setShow, titleSlot, className, size = "size-5/6" }: IBaseDialog) {
 	const dialogCls = classNames("flex shadow-md border rounded border-gray-300 flex-col absolute left-0 right-0 top-0 bottom-0 m-auto bg-white", show ? "" : "hidden", className, size);
 	titleSlot ??= (
-		<h1>
+		<h1 className="font-bold">
 			{title}
 		</h1>
 	);

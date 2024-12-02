@@ -3,7 +3,6 @@ import { ReviewEntity, ReviewUserEntity } from "@incutonez/ecommerce-spec";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { IconCollapse, IconExpand } from "@/assets/icons.tsx";
-import { AvatarUser } from "@/components/AvatarUser.tsx";
 import { BaseButton } from "@/components/BaseButton.tsx";
 import { LoadingMask } from "@/components/LoadingMask.tsx";
 import { ProductPrice } from "@/components/ProductPrice.tsx";
@@ -13,6 +12,7 @@ import { RouteViewProduct } from "@/routes.ts";
 import { useCartItemTotal } from "@/stores/CartTotal.ts";
 import { NotFound } from "@/templates/NotFound.tsx";
 import { ProductCartButtons, ProductDescription, ProductImage } from "@/templates/ProductTile.tsx";
+import { UserAvatar } from "@/templates/Users.tsx";
 import { isReviewEntity, isReviewUserEntity } from "@/types.ts";
 import { makePlural, toCurrency, uniqueKey } from "@/utils.ts";
 
@@ -95,12 +95,13 @@ export function ProductReview({ record, ...attrs }: IProductReview) {
 	const collapseTitle = collapsed ? "Expand" : "Collapse";
 	const descriptionHeight = collapsed ? 0 : contentHeight;
 	let createdBy: ReactNode;
-	if (isReviewEntity(record)) {
+	if (isReviewEntity(record) && record.createdBy) {
 		createdBy = (
-			<AvatarUser
+			<UserAvatar
 				random={true}
-				name={record.createdBy?.firstName}
-				userId={record.createdBy?.id}
+				name={`${record.createdBy.firstName} ${record.createdBy.lastName}`}
+				userId={record.createdBy.id}
+				gender={record.createdBy.gender}
 			/>
 		);
 	}

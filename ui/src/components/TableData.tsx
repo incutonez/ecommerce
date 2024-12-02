@@ -137,7 +137,7 @@ export function TableBody({ children }: ComponentProps<"tbody">) {
 export function TableRow({ children, onClick }: ComponentProps<"tr">) {
 	return (
 		<tr
-			className="border-b border-gray-300 hover:bg-blue-100"
+			className="cursor-pointer border-b border-gray-300 hover:bg-blue-100"
 			onClick={onClick}
 		>
 			{children}
