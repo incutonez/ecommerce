@@ -27,3 +27,7 @@ export type IFieldComboBox<TOption> = {
 	selection: TOption | undefined;
 	setSelection: (value: TOption | undefined) => void;
 } & SelectHTMLAttributes<HTMLSelectElement>;
+
+export interface IProductsSearch {
+	search?: string;
+}

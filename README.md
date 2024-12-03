@@ -22,3 +22,12 @@ This repo uses [npm workspaces](https://docs.npmjs.com/cli/v10/using-npm/workspa
   - TanStack Router
   - TailwindCSS
   - [useSyncExternalStore](https://react.dev/reference/react/useSyncExternalStore) instead of Zustand
+
+## Thoughts
+
+- I like React's TypeScript support... it feels more natural than Vue
+- I dislike that hooks MUST be inside a component or other hook... like I can't use a hook inside of TanStack's loader function... this is helpful if my queryOptions depend on global state
+- I dislike how you need to keep track of every single render, and if you have a mutation somewhere, it can keep looping infinitely
+  - It's really hard to understand where the multiple renders are occurring, especially with StrictMode, as it causes double rendering by definition
+  - Vue gets around this because it mostly uses Proxies under the hood
+  - e.g. calling state setters in TanStack's select function causes an initial loop render

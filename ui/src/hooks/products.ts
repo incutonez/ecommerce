@@ -4,7 +4,7 @@ import { ProductsAPI } from "@/apiConfig.ts";
 import { ContextPaginatedApi, queryClient } from "@/hooks/api.ts";
 
 export function useOptionsProducts() {
-	const { page, limit, filters, setTotal, setLoading } = useContext(ContextPaginatedApi)!;
+	const { page, limit, filters, setLoading } = useContext(ContextPaginatedApi)!;
 	return queryOptions({
 		queryKey: ["Products", page, limit, filters],
 		queryFn: async () => {
@@ -15,9 +15,8 @@ export function useOptionsProducts() {
 				filters,
 				start: 0,
 			});
-			setTotal(data.total ?? 0);
 			setLoading(false);
-			return data.data;
+			return data;
 		},
 	});
 }
@@ -45,8 +44,4 @@ export function optionsProductsFeatured(visibleAmount = 2) {
 
 export function useGetProductsFeatured(visibleAmount?: number) {
 	return queryClient.getQueryData(optionsProductsFeatured(visibleAmount).queryKey) ?? [];
-}
-
-export function useProductRecords() {
-	return queryClient.getQueryData(useOptionsProducts().queryKey);
 }

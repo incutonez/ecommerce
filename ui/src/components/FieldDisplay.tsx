@@ -1,33 +1,21 @@
-import { ComponentProps } from "react";
 import classNames from "classnames";
+import { FieldLabel } from "@/components/FieldLabel.tsx";
+import { getLabelAlignCls } from "@/components/fields.tsx";
+import { IBaseField } from "@/types/fields.ts";
 
-export interface IFieldDisplay extends ComponentProps<"article"> {
-	label?: string;
-	value?: string | number;
-	align?: "top" | "left";
-	separator?: string;
-}
-
-export function FieldDisplay({ label, value, className, align = "top", separator, children }: IFieldDisplay) {
-	const cls = [];
-	if (align === "top") {
-		cls.push("flex flex-col space-y-0.5");
-	}
-	else {
-		cls.push("flex space-x-1");
-	}
-	className = classNames("text-sm", className, cls);
+export function FieldDisplay({ label, value, className, align = "top", separator, children }: IBaseField) {
+	className = classNames(className, getLabelAlignCls(align));
 	children ??= (
-		<span>
+		<span className="text-sm">
 			{value}
 		</span>
 	);
 	return (
 		<article className={className}>
-			<label className="font-bold uppercase text-gray-600">
-				{label}
-				{separator}
-			</label>
+			<FieldLabel
+				label={label}
+				separator={separator}
+			/>
 			{children}
 		</article>
 	);

@@ -6,14 +6,12 @@ import { whereSearch } from "src/db/query";
 import { EnumFilterType } from "src/enums.entity";
 import { ApiPaginatedRequest } from "src/models/base.list.entity";
 import { ProductsMapper } from "src/products/products.mapper";
-import { sleep } from "src/utils";
 
 @Injectable()
 export class ProductsService {
 	constructor(private mapper: ProductsMapper) {	}
 
 	async getProducts({ page = 1, limit = 20, filters = [] }: ApiPaginatedRequest) {
-		await sleep(2000);
 		const query: FindAndCountOptions<ProductModel> = {
 			limit,
 			offset: (page - 1) * limit,
