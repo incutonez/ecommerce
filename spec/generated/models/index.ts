@@ -1,6 +1,6 @@
 export * from './access-token-entity';
-export * from './address-entity';
 export * from './api-paginated-request';
+export * from './auth-login-entity';
 export * from './bulk-response';
 export * from './cart-checkout-item-entity';
 export * from './cart-checkout-response-model';

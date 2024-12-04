@@ -1,9 +1,9 @@
-import { Controller, Get, Req } from "@nestjs/common";
+import { Body, Controller, Get, Post, Req } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
 import { IgnoreAuth } from "src/auth.guard";
 import { AuthService } from "src/auth/auth.service";
-import { AccessTokenEntity } from "src/models/access.token.entity";
+import { AccessTokenEntity, AuthLoginEntity } from "src/models/auth.entity";
 import { ProfileEntity } from "src/models/profile.entity";
 
 @ApiTags("auth")
@@ -13,9 +13,9 @@ export class AuthController {
 	}
 
 	@IgnoreAuth()
-	@Get("access-token")
-	async getAccessToken(): Promise<AccessTokenEntity> {
-		return this.service.signIn("56598d60-1523-4c0d-b5f4-6fad590e69a7", "test");
+	@Post("login")
+	async login(@Body() body: AuthLoginEntity): Promise<AccessTokenEntity> {
+		return this.service.signIn(body.username, body.password);
 	}
 
 	@Get("profile")

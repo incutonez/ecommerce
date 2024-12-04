@@ -6,10 +6,11 @@ import { TSetTimeout } from "@/types.ts";
 import { IEventFieldChange, IFieldText } from "@/types/fields.ts";
 import { emptyFn } from "@/utils.ts";
 
-export function FieldText({ label, value = "", setValue, inputRef, inputClassname, size = "h-8", align, placeholder, className, onEnter = emptyFn, typeDelay = 250, onInputChange = emptyFn, onBlur = emptyFn, onFocus = emptyFn }: IFieldText) {
+export function FieldText({ label, separator, value = "", setValue, inputRef, inputClassname, size = "h-8", align = "top", placeholder, className, onEnter = emptyFn, typeDelay = 250, onInputChange = emptyFn, onBlur = emptyFn, onFocus = emptyFn, inputAttrs = {}, labelAttrs = {} }: IFieldText) {
 	const typeDelayTimer = useRef<TSetTimeout>(undefined);
 	className = classNames(className, getLabelAlignCls(align));
-	inputClassname = classNames("px-2 outline-none focus-within:ring-2 focus-within:z-1 ring-yellow-500", inputClassname, size);
+	inputClassname = classNames("px-2 outline-none focus-within:ring-2 focus-within:z-1 ring-yellow-500 border border-gray-300 rounded", inputClassname, size);
+	inputAttrs.type ??= "text";
 
 	function onChange({ target }: IEventFieldChange) {
 		const { value = "" } = target;
@@ -27,17 +28,21 @@ export function FieldText({ label, value = "", setValue, inputRef, inputClassnam
 
 	return (
 		<article className={className}>
-			<FieldLabel label={label} />
+			<FieldLabel
+				{...labelAttrs}
+				label={label}
+				separator={separator}
+			/>
 			<input
 				ref={inputRef}
 				className={inputClassname}
-				type="text"
 				placeholder={placeholder}
 				value={value}
 				onChange={onChange}
 				onKeyDown={onKeyDown}
 				onBlur={onBlur}
 				onFocus={onFocus}
+				{...inputAttrs}
 			/>
 		</article>
 	);

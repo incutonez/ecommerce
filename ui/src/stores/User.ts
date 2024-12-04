@@ -1,32 +1,75 @@
 import { useSyncExternalStore } from "react";
 import { decodeToken, isExpired } from "react-jwt";
 import { ProfileEntity } from "@incutonez/ecommerce-api/dist/models/profile.entity.ts";
+import Cookies from "universal-cookie";
 import { AuthAPI, configuration } from "@/apiConfig.ts";
 import { BaseStore } from "@/stores/BaseStore.ts";
-import { CartTotalStore } from "@/stores/CartTotal.ts";
 
 interface IUser {
-	token: ProfileEntity;
-	expired: boolean;
+	token?: ProfileEntity;
+	expired?: boolean;
+	loading?: boolean;
 }
 
+const cookies = new Cookies(null, {
+	path: "/",
+});
+
 class User extends BaseStore<IUser> {
-	snapshot = {} as IUser;
+	snapshot = {
+		loading: true,
+	} as IUser;
+
+	constructor() {
+		super();
+		const accessToken = cookies.get("accessToken");
+		if (accessToken) {
+			this.processAccessToken(accessToken, false);
+			this.load();
+		}
+	}
+
+	processAccessToken(accessToken = cookies.get<string | undefined>("accessToken"), setToken = true) {
+		if (!accessToken) {
+			return;
+		}
+		const token = decodeToken<ProfileEntity>(accessToken);
+		const expired = isExpired(accessToken);
+		cookies.set("accessToken", accessToken);
+		// Set this on the global configuration so all API calls get access to it
+		configuration.baseOptions.headers.Authorization = `Bearer: ${accessToken}`;
+		if (setToken) {
+			this.setSnapshot({
+				token: token!,
+				expired,
+			});
+		}
+	}
+
+	async login(username: string, password: string) {
+		this.abort();
+		const { data } = await AuthAPI.login({
+			username,
+			password,
+		}, {
+			signal: this.apiController.signal,
+		});
+		this.processAccessToken(data.accessToken);
+	}
 
 	async load() {
 		this.abort();
-		const { data } = await AuthAPI.getAccessToken({
-			signal: this.apiController.signal,
-		});
-		const token = decodeToken<ProfileEntity>(data.accessToken);
-		const expired = isExpired(data.accessToken);
-		// Set this on the global configuration so all API calls get access to it
-		configuration.baseOptions.headers.Authorization = `Bearer: ${data.accessToken}`;
-		await CartTotalStore.loadCartCount();
-		this.setSnapshot({
-			token: token!,
-			expired,
-		});
+		try {
+			await AuthAPI.getProfile({
+				signal: this.apiController.signal,
+			});
+			this.processAccessToken();
+		}
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		catch (ex) {
+			this.setSnapshot({});
+			console.error("Login failed");
+		}
 	}
 }
 

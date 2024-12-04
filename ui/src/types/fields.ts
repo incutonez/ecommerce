@@ -4,10 +4,12 @@ export type IEventFieldChange = ChangeEvent<HTMLInputElement>;
 
 export interface IBaseField extends ComponentProps<"article"> {
 	label?: string;
+	labelAttrs?: ComponentProps<"label">;
 	align?: "top" | "left";
 	separator?: string;
 	size?: string;
 	value?: string;
+	inputAttrs?: ComponentProps<"input">;
 }
 
 export interface IFieldLabel extends ComponentProps<"label"> {

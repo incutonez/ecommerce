@@ -24,6 +24,8 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { AccessTokenEntity } from '../models';
 // @ts-ignore
+import { AuthLoginEntity } from '../models';
+// @ts-ignore
 import { ProfileEntity } from '../models';
 /**
  * AuthApi - axios parameter creator
@@ -31,35 +33,6 @@ import { ProfileEntity } from '../models';
  */
 export const AuthApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAccessToken: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/auth/access-token`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * 
          * @param {*} [options] Override http request option.
@@ -89,6 +62,41 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {AuthLoginEntity} authLoginEntity 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        login: async (authLoginEntity: AuthLoginEntity, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authLoginEntity' is not null or undefined
+            assertParamExists('login', 'authLoginEntity', authLoginEntity)
+            const localVarPath = `/auth/login`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(authLoginEntity, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -104,17 +112,18 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAccessToken(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccessTokenEntity>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAccessToken(options);
+        async getProfile(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProfileEntity>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProfile(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
+         * @param {AuthLoginEntity} authLoginEntity 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProfile(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProfileEntity>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getProfile(options);
+        async login(authLoginEntity: AuthLoginEntity, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccessTokenEntity>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.login(authLoginEntity, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -132,16 +141,17 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccessToken(options?: any): AxiosPromise<AccessTokenEntity> {
-            return localVarFp.getAccessToken(options).then((request) => request(axios, basePath));
+        getProfile(options?: any): AxiosPromise<ProfileEntity> {
+            return localVarFp.getProfile(options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @param {AuthLoginEntity} authLoginEntity 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProfile(options?: any): AxiosPromise<ProfileEntity> {
-            return localVarFp.getProfile(options).then((request) => request(axios, basePath));
+        login(authLoginEntity: AuthLoginEntity, options?: any): AxiosPromise<AccessTokenEntity> {
+            return localVarFp.login(authLoginEntity, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -158,15 +168,16 @@ export interface AuthApiInterface {
      * @throws {RequiredError}
      * @memberof AuthApiInterface
      */
-    getAccessToken(options?: AxiosRequestConfig): AxiosPromise<AccessTokenEntity>;
+    getProfile(options?: AxiosRequestConfig): AxiosPromise<ProfileEntity>;
 
     /**
      * 
+     * @param {AuthLoginEntity} authLoginEntity 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApiInterface
      */
-    getProfile(options?: AxiosRequestConfig): AxiosPromise<ProfileEntity>;
+    login(authLoginEntity: AuthLoginEntity, options?: AxiosRequestConfig): AxiosPromise<AccessTokenEntity>;
 
 }
 
@@ -183,17 +194,18 @@ export class AuthApi extends BaseAPI implements AuthApiInterface {
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public getAccessToken(options?: AxiosRequestConfig) {
-        return AuthApiFp(this.configuration).getAccessToken(options).then((request) => request(this.axios, this.basePath));
+    public getProfile(options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).getProfile(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
+     * @param {AuthLoginEntity} authLoginEntity 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public getProfile(options?: AxiosRequestConfig) {
-        return AuthApiFp(this.configuration).getProfile(options).then((request) => request(this.axios, this.basePath));
+    public login(authLoginEntity: AuthLoginEntity, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).login(authLoginEntity, options).then((request) => request(this.axios, this.basePath));
     }
 }

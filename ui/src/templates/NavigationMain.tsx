@@ -82,7 +82,7 @@ export function NavigationMain() {
 				/>
 				<FieldDropdown
 					size="h-10 w-80"
-					inputClassname="overflow-hidden"
+					inputClassname="overflow-hidden rounded-none"
 					placeholder="Search the Market"
 					value={search}
 					setValue={setSearch}

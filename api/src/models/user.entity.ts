@@ -9,6 +9,6 @@ export class UserEntity {
 	phone?: string;
 	birthDate?: number;
 	gender?: string;
-	address?: AddressEntity;
+	address?: Partial<AddressEntity>;
 	reviews?: ReviewUserEntity[];
 }

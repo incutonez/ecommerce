@@ -29,6 +29,7 @@
     "@nestjs/sequelize": "^10.0.1",
     "@nestjs/swagger": "^8.0.5",
     "bignumber.js": "^9.1.2",
+    "compression": "^1.7.5",
     "just-diff": "^6.0.2",
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.2.2",

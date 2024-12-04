@@ -6,7 +6,7 @@ export function getLabelAlignCls(align: IBaseField["align"]) {
 		cls = "flex flex-col space-y-0.5";
 	}
 	else {
-		cls = "flex space-x-1";
+		cls = "flex items-center space-x-2";
 	}
 	return cls;
 }

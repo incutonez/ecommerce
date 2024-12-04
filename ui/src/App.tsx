@@ -1,10 +1,10 @@
-import { useEffect } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { createHashHistory, createRouter, RouterProvider } from "@tanstack/react-router";
-import { LoadingMask } from "@/components/LoadingMask.tsx";
 import { queryClient } from "@/hooks/api.ts";
 import { routeTree } from "@/routeTree.gen.ts";
-import { UserStore, useUserStore } from "@/stores/User.ts";
+import { CartTotalStore } from "@/stores/CartTotal.ts";
+import { useUserStore } from "@/stores/User.ts";
+import { LogIn } from "@/templates/LogIn.tsx";
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {
@@ -28,17 +28,12 @@ const router = createRouter({
 
 export function App() {
 	const { token } = useUserStore();
-	useEffect(() => {
-		UserStore.load();
-		return () => {
-			UserStore.abort();
-		};
-	}, []);
 	if (!token) {
 		return (
-			<LoadingMask />
+			<LogIn />
 		);
 	}
+	CartTotalStore.loadCartCount();
 	// Only allow the rest of the app if we've authenticated properly... this prevents any routes from loading before we've authed
 	return (
 		<QueryClientProvider client={queryClient}>

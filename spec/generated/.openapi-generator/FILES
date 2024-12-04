@@ -15,8 +15,8 @@ configuration.ts
 git_push.sh
 index.ts
 models/access-token-entity.ts
-models/address-entity.ts
 models/api-paginated-request.ts
+models/auth-login-entity.ts
 models/bulk-response.ts
 models/cart-checkout-item-entity.ts
 models/cart-checkout-response-model.ts
