@@ -16,6 +16,9 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import { ReviewUserEntity } from './review-user-entity';
+// May contain unused imports in some cases
+// @ts-ignore
+import { UserAddressEntity } from './user-address-entity';
 
 /**
  * 
@@ -67,10 +70,10 @@ export interface UserEntity {
     'gender'?: string;
     /**
      * 
-     * @type {object}
+     * @type {UserAddressEntity}
      * @memberof UserEntity
      */
-    'address'?: object;
+    'address'?: UserAddressEntity;
     /**
      * 
      * @type {Array<ReviewUserEntity>}

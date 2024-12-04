@@ -1,3 +1,5 @@
+import { PartialType } from "@nestjs/swagger";
+
 export class AddressEntity {
 	id?: string;
 	lineOne: string;
@@ -6,3 +8,5 @@ export class AddressEntity {
 	state: string;
 	zipCode: string;
 }
+
+export class UserAddressEntity extends PartialType(AddressEntity) {}

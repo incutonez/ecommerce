@@ -22,6 +22,7 @@ export * from './profile-entity';
 export * from './review-entity';
 export * from './review-user-entity';
 export * from './sort-type';
+export * from './user-address-entity';
 export * from './user-entity';
 export * from './user-response-model';
 export * from './version-entity';
