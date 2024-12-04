@@ -4,14 +4,15 @@
   "description": "Example ecommerce app in React UI and NestJS API",
   "main": "index.js",
   "scripts": {
-    "api": "cd api && npm run start:dev",
-    "api:build": "cd api && npm run build",
-    "api:commit": "cd api && npm run lint && npm run build",
-    "spec": "cd spec && npm run generate",
-    "spec:build": "cd spec && npm run build",
-    "ui": "cd ui && npm run dev",
-    "ui:build": "cd ui && npm run build",
-    "ui:commit": "cd ui && npm run lint && npm run build",
+    "api": "cd packages/api && npm run start:dev",
+    "api:build": "cd packages/api && npm run build",
+    "api:commit": "cd packages/api && npm run lint && npm run build",
+    "explode": "npm cache clean --force && npx rimraf package-lock.json **/node_modules --glob && npm i",
+    "spec": "cd packages/spec && npm run generate",
+    "spec:build": "cd packages/spec && npm run build",
+    "ui": "cd packages/ui && npm run dev",
+    "ui:build": "cd packages/ui && npm run build",
+    "ui:commit": "cd packages/ui && npm run lint && npm run build",
     "prepare": "husky"
   },
   "repository": {
@@ -46,9 +47,7 @@
     ]
   },
   "workspaces": [
-    "api",
-    "spec",
-    "ui"
+    "packages/*"
   ],
   "devDependencies": {
     "@semantic-release/exec": "^6.0.3",
