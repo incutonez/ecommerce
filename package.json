@@ -1,0 +1,60 @@
+{
+  "name": "@incutonez/ecommerce",
+  "version": "1.0.0",
+  "description": "Example ecommerce app in React UI and NestJS API",
+  "main": "index.js",
+  "scripts": {
+    "api": "cd api && npm run start:dev",
+    "api:build": "cd api && npm run build",
+    "api:commit": "cd api && npm run lint && npm run build",
+    "spec": "cd spec && npm run generate",
+    "spec:build": "cd spec && npm run build",
+    "ui": "cd ui && npm run dev",
+    "ui:build": "cd ui && npm run build",
+    "ui:commit": "cd ui && npm run lint && npm run build",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/incutonez/ecommerce.git"
+  },
+  "author": "incutonez",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9"
+  },
+  "lint-staged": {
+    "ui/**/*.{tsx,ts}": "npm run ui:commit",
+    "api/**/*.ts": "npm run api:commit"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
+        }
+      ],
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ]
+  },
+  "workspaces": [
+    "api",
+    "spec",
+    "ui"
+  ],
+  "devDependencies": {
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "multi-semantic-release": "^3.0.2"
+  }
+}
