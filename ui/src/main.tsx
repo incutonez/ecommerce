@@ -3,6 +3,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import axios, { isCancel } from "axios";
 import { App } from "@/App.tsx";
+import { UserStore } from "@/stores/User.ts";
 
 /**
  * In StrictMode, we sometimes get double renderings that call 2 APIs, but the load API is called so quickly that it
@@ -21,6 +22,10 @@ addEventListener("unhandledrejection", (event) => {
 axios.interceptors.response.use(undefined, (error) => {
 	if (isCancel(error)) {
 		return false;
+	}
+	if (error.response.status === 401) {
+		// Quick hack that will redirect to login
+		UserStore.setSnapshot({});
 	}
 	throw error;
 });

@@ -16,9 +16,7 @@ const cookies = new Cookies(null, {
 });
 
 class User extends BaseStore<IUser> {
-	snapshot = {
-		loading: true,
-	} as IUser;
+	snapshot = {} as IUser;
 
 	constructor() {
 		super();
@@ -60,6 +58,9 @@ class User extends BaseStore<IUser> {
 	async load() {
 		this.abort();
 		try {
+			this.setSnapshot({
+				loading: true,
+			});
 			await AuthAPI.getProfile({
 				signal: this.apiController.signal,
 			});
