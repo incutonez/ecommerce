@@ -1,6 +1,8 @@
 import { SelectHTMLAttributes, useSyncExternalStore } from "react";
 import { ReviewEntity, ReviewUserEntity } from "@incutonez/ecommerce-spec";
 
+export type TSetTimeout = ReturnType<typeof setTimeout> | undefined;
+
 export type TSubscribeListener = () => void;
 
 export type ExtStoreSub = Parameters<typeof useSyncExternalStore>[0];

@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentProps } from "react";
+import { ChangeEvent, ComponentProps, RefObject } from "react";
 
 export type IEventFieldChange = ChangeEvent<HTMLInputElement>;
 
@@ -7,7 +7,7 @@ export interface IBaseField extends ComponentProps<"article"> {
 	align?: "top" | "left";
 	separator?: string;
 	size?: string;
-	value: string;
+	value?: string;
 }
 
 export interface IFieldLabel extends ComponentProps<"label"> {
@@ -16,8 +16,12 @@ export interface IFieldLabel extends ComponentProps<"label"> {
 }
 
 export interface IFieldText extends IBaseField {
-	setValue: (value: string) => void;
 	placeholder?: string;
 	inputClassname?: string;
+	typeDelay?: number;
+	inputRef?: RefObject<HTMLInputElement>;
+	setValue: (value: string) => void;
 	onEnter?: (value: string) => void;
+	// This is only useful if you're using typeDelay... it will fire after the delay has finished
+	onInputChange?: (value: string) => void;
 }

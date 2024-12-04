@@ -53,3 +53,5 @@ export { default as IconClose } from "@material-symbols/svg-400/outlined/close.s
 export { default as IconSort } from "@material-symbols/svg-400/outlined/sort.svg?react";
 
 export { default as IconArrowDown } from "@material-symbols/svg-400/outlined/south.svg?react";
+
+export { default as IconSearchEmpty } from "@material-symbols/svg-400/outlined/search_off.svg?react";

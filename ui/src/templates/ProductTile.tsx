@@ -5,7 +5,7 @@ import { IconAdd, IconDelete, IconRemove } from "@/assets/icons.tsx";
 import { BaseButton } from "@/components/BaseButton.tsx";
 import { ProductPrice } from "@/components/ProductPrice.tsx";
 import { RatingStars } from "@/components/RatingStars.tsx";
-import { ContextProductRecord, useProductRecord } from "@/contexts.ts";
+import { ContextProductRecord } from "@/contexts.ts";
 import { RouteViewProduct } from "@/routes.ts";
 import { CartTotalStore, useCartItemTotal } from "@/stores/CartTotal.ts";
 import { getImageUrl } from "@/utils.ts";
@@ -30,14 +30,17 @@ export function ProductImage({ image, size = "size-52" }: IProductImage) {
 	);
 }
 
-export function ProductTitle() {
-	const record = useProductRecord();
+export interface IProductTitle {
+	name: string;
+}
+
+export function ProductTitle({ name }: IProductTitle) {
 	return (
 		<span
 			className="line-clamp-1 font-semibold capitalize hover:text-sky-800"
-			title={record.name}
+			title={name}
 		>
-			{record.name}
+			{name}
 		</span>
 	);
 }
@@ -128,7 +131,7 @@ export function ProductTile({ record }: IProductTile) {
 				>
 					<ProductImage image={record.image} />
 					<section className="flex w-full flex-col items-stretch border-x p-2">
-						<ProductTitle />
+						<ProductTitle name={record.name} />
 						<ProductDescription description={record.description} />
 					</section>
 				</Link>

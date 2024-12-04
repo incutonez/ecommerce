@@ -26,6 +26,8 @@ export type TPaginatedApi = ReturnType<typeof usePaginatedApi>;
 
 export const ContextPaginatedApi = createContext<TPaginatedApi | undefined>(undefined);
 
+export const SearchField = "$search$";
+
 export function usePaginatedApi(params?: IUsePaginatedApi) {
 	params ??= {};
 	params.initialLimit ??= 20;
@@ -35,6 +37,7 @@ export function usePaginatedApi(params?: IUsePaginatedApi) {
 		initialFilters.push({
 			type: EnumFilterType.Search,
 			value: params.search,
+			field: SearchField,
 		});
 	}
 	const [total, setTotal] = useState(0);
@@ -57,8 +60,18 @@ export function usePaginatedApi(params?: IUsePaginatedApi) {
 	}, [total, limit]);
 	const nextDisabled = useMemo(() => page === lastPage, [page, lastPage]);
 
+	function addFilter(filter: FilterType) {
+		const tempFilters = filters.filter((item) => item.field !== filter.field);
+		tempFilters.push(filter);
+		setFilters(tempFilters);
+	}
+
+	function removeFilter(field: string) {
+		setFilters(filters.filter((item) => item.field !== field));
+	}
+
 	function setSearch(search: string | undefined) {
-		const found = filters.find((filter) => filter.type === EnumFilterType.Search);
+		const found = filters.find((filter) => filter.field === SearchField);
 		// When they're the same, there's no reason to mutate because it'll cause infinite rendering
 		if (found?.value === search) {
 			return;
@@ -66,8 +79,7 @@ export function usePaginatedApi(params?: IUsePaginatedApi) {
 		/* We're going from having a search to no search value, so let's just filter out the search.  If we didn't do this,
 		 * then there'd be a rendering issue with the code below because we'd be mutating the array every time */
 		else if (found && !search) {
-			const tempFilters = filters.filter((filter) => filter.type !== EnumFilterType.Search);
-			setFilters(tempFilters);
+			removeFilter(SearchField);
 			return;
 		}
 		else if (search) {
@@ -76,6 +88,7 @@ export function usePaginatedApi(params?: IUsePaginatedApi) {
 				tempFilters.push({
 					type: EnumFilterType.Search,
 					value: search,
+					field: SearchField,
 				});
 			}
 			setFilters(tempFilters);
@@ -111,5 +124,7 @@ export function usePaginatedApi(params?: IUsePaginatedApi) {
 		sorters,
 		setSorters,
 		setSearch,
+		addFilter,
+		removeFilter,
 	};
 }

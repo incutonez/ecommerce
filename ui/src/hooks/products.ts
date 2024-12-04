@@ -1,10 +1,8 @@
-import { useContext } from "react";
 import { queryOptions } from "@tanstack/react-query";
 import { ProductsAPI } from "@/apiConfig.ts";
-import { ContextPaginatedApi, queryClient } from "@/hooks/api.ts";
+import { queryClient, TPaginatedApi } from "@/hooks/api.ts";
 
-export function useOptionsProducts() {
-	const { page, limit, filters, setLoading } = useContext(ContextPaginatedApi)!;
+export function useOptionsProducts({ page, limit, filters, setLoading }: TPaginatedApi) {
 	return queryOptions({
 		queryKey: ["Products", page, limit, filters],
 		queryFn: async () => {
@@ -17,6 +15,22 @@ export function useOptionsProducts() {
 			});
 			setLoading(false);
 			return data;
+		},
+	});
+}
+
+export function useOptionsProductsSearch({ filters }: TPaginatedApi) {
+	return queryOptions({
+		enabled: false,
+		queryKey: ["ProductsSearch", filters],
+		queryFn: async () => {
+			const { data } = await ProductsAPI.listProducts({
+				page: 1,
+				limit: 5,
+				filters,
+				start: 0,
+			});
+			return data.data;
 		},
 	});
 }

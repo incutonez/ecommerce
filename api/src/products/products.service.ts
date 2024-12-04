@@ -29,7 +29,7 @@ export class ProductsService {
 		};
 		filters.forEach(({ type, value }) => {
 			if (type === EnumFilterType.Search) {
-				query.where = whereSearch<ProductModel>(["name", "price", "description"], value);
+				query.where = whereSearch<ProductModel>(["name", "price", "description", "category_id"], value);
 			}
 		});
 		const { rows, count } = await ProductModel.findAndCountAll(query);

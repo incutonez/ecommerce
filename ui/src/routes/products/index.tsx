@@ -15,7 +15,6 @@ export const Route = createFileRoute(RouteViewProducts)({
 	},
 });
 
-// TODOJEF: Wiring up the products search and get the results page working
 function RouteComponent() {
 	const { search } = useSearch({
 		from: RouteViewProducts,

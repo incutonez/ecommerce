@@ -30,7 +30,7 @@ export function ProductFeaturedTile({ record }: { record: ProductListEntity }) {
 				>
 					<ProductImage image={record.image} />
 					<section className="flex flex-1 flex-col space-y-2 overflow-hidden">
-						<ProductTitle />
+						<ProductTitle name={record.name} />
 						<ProductDescription
 							clamp="line-clamp-2 lg:line-clamp-[9]"
 							description={record.description}
