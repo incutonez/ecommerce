@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { decodeToken, isExpired } from "react-jwt";
-import { ProfileEntity } from "@incutonez/ecommerce-api/dist/models/profile.entity.ts";
+import { ProfileEntity } from "@incutonez/ecommerce-spec";
 import Cookies from "universal-cookie";
 import { AuthAPI, configuration } from "@/apiConfig.ts";
 import { BaseStore } from "@/stores/BaseStore.ts";
