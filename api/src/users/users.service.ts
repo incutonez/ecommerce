@@ -35,6 +35,21 @@ export class UsersService {
 		};
 	}
 
+	async getUserByEmail(email: string) {
+		const response = await UserModel.findOne({
+			where: {
+				email,
+			},
+			include: [
+				{
+					all: true,
+					nested: true,
+				},
+			],
+		});
+		return this.mapper.userToViewModel(response);
+	}
+
 	async getUser(userId: string) {
 		const response = await UserModel.findOne({
 			where: {

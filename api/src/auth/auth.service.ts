@@ -1,5 +1,9 @@
+import { faker } from "@faker-js/faker";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
+import { Sequelize } from "sequelize";
+import { AddressModel } from "src/db/models/AddressModel";
+import { UserEntity } from "src/models/user.entity";
 import { UsersService } from "src/users/users.service";
 
 @Injectable()
@@ -8,7 +12,28 @@ export class AuthService {
 	}
 
 	async signIn(username: string, pass: string) {
-		const user = await this.usersService.getUser(username);
+		let user: UserEntity;
+		try {
+			user = await this.usersService.getUserByEmail(username);
+		}
+		catch (ex) {
+			console.log(ex);
+			const sex = faker.person.sexType();
+			const address = await AddressModel.findOne({
+				order: Sequelize.literal("random()"),
+			});
+			user = await this.usersService.createUser({
+				firstName: faker.person.firstName(sex),
+				lastName: faker.person.lastName(),
+				email: username,
+				phone: faker.phone.number(),
+				birthDate: faker.date.birthdate().getTime(),
+				gender: sex,
+				address: {
+					id: address.id,
+				},
+			});
+		}
 		// Obviously this would be checking against some sort of hashed DB entry
 		if (pass !== "test") {
 			throw new UnauthorizedException();

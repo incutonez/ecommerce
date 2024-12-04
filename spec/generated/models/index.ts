@@ -1,6 +1,6 @@
 export * from './access-token-entity';
-export * from './address-entity';
 export * from './api-paginated-request';
+export * from './auth-login-entity';
 export * from './bulk-response';
 export * from './cart-checkout-item-entity';
 export * from './cart-checkout-response-model';
@@ -22,6 +22,7 @@ export * from './profile-entity';
 export * from './review-entity';
 export * from './review-user-entity';
 export * from './sort-type';
+export * from './user-address-entity';
 export * from './user-entity';
 export * from './user-response-model';
 export * from './version-entity';

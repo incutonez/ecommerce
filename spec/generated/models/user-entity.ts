@@ -15,10 +15,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { AddressEntity } from './address-entity';
+import { ReviewUserEntity } from './review-user-entity';
 // May contain unused imports in some cases
 // @ts-ignore
-import { ReviewUserEntity } from './review-user-entity';
+import { UserAddressEntity } from './user-address-entity';
 
 /**
  * 
@@ -70,10 +70,10 @@ export interface UserEntity {
     'gender'?: string;
     /**
      * 
-     * @type {AddressEntity}
+     * @type {UserAddressEntity}
      * @memberof UserEntity
      */
-    'address'?: AddressEntity;
+    'address'?: UserAddressEntity;
     /**
      * 
      * @type {Array<ReviewUserEntity>}

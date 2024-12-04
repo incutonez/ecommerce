@@ -22,6 +22,7 @@ axios.interceptors.response.use(undefined, (error) => {
 	if (isCancel(error)) {
 		return false;
 	}
+	throw error;
 });
 
 /**

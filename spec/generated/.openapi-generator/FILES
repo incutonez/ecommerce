@@ -15,8 +15,8 @@ configuration.ts
 git_push.sh
 index.ts
 models/access-token-entity.ts
-models/address-entity.ts
 models/api-paginated-request.ts
+models/auth-login-entity.ts
 models/bulk-response.ts
 models/cart-checkout-item-entity.ts
 models/cart-checkout-response-model.ts
@@ -39,6 +39,7 @@ models/profile-entity.ts
 models/review-entity.ts
 models/review-user-entity.ts
 models/sort-type.ts
+models/user-address-entity.ts
 models/user-entity.ts
 models/user-response-model.ts
 models/version-entity.ts

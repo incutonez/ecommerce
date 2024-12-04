@@ -1,5 +1,5 @@
 import { ComponentProps, ElementType } from "react";
-import { AddressEntity, UserEntity } from "@incutonez/ecommerce-spec";
+import { UserAddressEntity, UserEntity } from "@incutonez/ecommerce-spec";
 import { IBaseDialog } from "@/components/BaseDialog.tsx";
 
 export interface IViewUser extends ComponentProps<"article"> {
@@ -21,7 +21,7 @@ export interface IUserBirthDate {
 }
 
 export interface IUserAddress {
-	address?: AddressEntity;
+	address?: UserAddressEntity;
 }
 
 export interface IUserDetails {
