@@ -26,8 +26,8 @@
     "npm": ">=9"
   },
   "lint-staged": {
-    "ui/**/*.{tsx,ts}": "npm run ui:commit",
-    "api/**/*.ts": "npm run api:commit"
+    "packages/ui/**/*.{tsx,ts}": "npm run ui:commit",
+    "packages/api/**/*.ts": "npm run api:commit"
   },
   "release": {
     "branches": [
