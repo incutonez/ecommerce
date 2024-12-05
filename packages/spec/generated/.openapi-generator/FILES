@@ -6,6 +6,7 @@ api/app-api.ts
 api/auth-api.ts
 api/cart-items-api.ts
 api/categories-api.ts
+api/health-api.ts
 api/images-api.ts
 api/products-api.ts
 api/users-api.ts

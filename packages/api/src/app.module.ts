@@ -8,6 +8,7 @@ import { AuthModule } from "src/auth/auth.module";
 import { CartItemsModule } from "src/cart/cart.items.module";
 import { CategoriesModule } from "src/categories/categories.module";
 import { DBConfig } from "src/db";
+import { HealthModule } from "src/health/health.module";
 import { ImagesModule } from "src/images/images.module";
 import { ProductsModule } from "src/products/products.module";
 import { ReviewsModule } from "src/reviews/reviews.module";
@@ -22,6 +23,7 @@ import { UsersModule } from "src/users/users.module";
 		CategoriesModule,
 		ReviewsModule,
 		CartItemsModule,
+		HealthModule,
 		ConfigModule.forRoot({
 			envFilePath: [".env.local", ".env"],
 		}),
