@@ -5,9 +5,10 @@ This repo uses [npm workspaces](https://docs.npmjs.com/cli/v10/using-npm/workspa
 
 ## Running App
 
-1. `npm run api` in dedicated terminal
-2. `npm run ui` in dedicated terminal
-3. Navigate to http://localhost:5173
+1. `npm run spec:build`
+2. `npm run api` in dedicated terminal
+3. `npm run ui` in dedicated terminal
+4. Navigate to http://localhost:5173
 
 ## Architecture
 
