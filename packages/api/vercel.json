@@ -3,5 +3,18 @@
   "buildCommand": "cd ../.. && npm run api:build",
   "installCommand": "npm install --prefix=../..",
   "outputDirectory": "dist",
-  "framework": null
+  "framework": null,
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/",
+      "methods": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "OPTIONS"
+      ]
+    }
+  ]
 }
