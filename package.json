@@ -13,7 +13,7 @@
     "ui": "cd packages/ui && npm run dev",
     "ui:build": "cd packages/ui && npm run build",
     "ui:commit": "cd packages/ui && npm run lint && npm run build",
-    "prepare": "husky"
+    "prepare": "npx husky install"
   },
   "repository": {
     "type": "git",
