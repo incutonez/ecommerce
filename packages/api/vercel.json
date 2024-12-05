@@ -1,6 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
+  "buildCommand": "cd ../.. && npm run api:build",
+  "installCommand": "npm install --prefix=../..",
+  "outputDirectory": "dist",
+  "framework": null,
   "builds": [
     {
       "src": "dist/*.js",
