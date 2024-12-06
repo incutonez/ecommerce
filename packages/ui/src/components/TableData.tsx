@@ -159,7 +159,7 @@ export function TableColumnSort({ direction }: ITableColumnSort) {
 }
 
 export function TableColumn({ children, config }: ITableColumn) {
-	const sort = useRef<EnumSortType | undefined>();
+	const sort = useRef<EnumSortType>(undefined);
 	const { api } = useTableDataContext();
 
 	function onClickColumn() {

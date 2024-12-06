@@ -5,7 +5,7 @@ import { IOption } from "@/types.ts";
  * Taken from https://overreacted.io/making-setinterval-declarative-with-react-hooks/
  */
 export function useInterval(callback: () => void, delay: number | null = 2000) {
-	const savedCallback = useRef<() => void>();
+	const savedCallback = useRef<() => void>(undefined);
 
 	// Remember the latest callback.
 	useEffect(() => {
