@@ -1,6 +1,7 @@
 import { ComponentProps, ElementType, isValidElement, ReactNode } from "react";
 import classNames from "classnames";
 import { BaseIcon } from "@/components/BaseIcon.tsx";
+import { IconLoading } from "@/components/IconLoading.tsx";
 
 export type IBaseButton<T extends ElementType = "button"> = ComponentProps<T> & {
 	text?: string | ReactNode;
@@ -11,15 +12,26 @@ export type IBaseButton<T extends ElementType = "button"> = ComponentProps<T> & 
 	size?: string;
 	hidden?: boolean;
 	color?: string;
+	loading?: boolean;
 }
 
-export function BaseButton({ text, color = "bg-slate-300 hover:bg-slate-400", icon, iconSlot, hidden = false, size = "h-8", iconCls = "", className, iconAfter = false, ...attrs }: IBaseButton) {
+export function BaseButton({ text, color = "bg-slate-300 hover:bg-slate-400", loading = false, icon, iconSlot, hidden = false, size = "h-8", iconCls = "", className, iconAfter = false, ...attrs }: IBaseButton) {
 	let textNode: ReactNode;
-	const ButtonIcon = iconSlot || icon &&
+	let buttonIcon: ReactNode;
+	if (loading) {
+		buttonIcon = <IconLoading />;
+	}
+	else if (iconSlot) {
+		buttonIcon = iconSlot;
+	}
+	else if (icon) {
+		buttonIcon = (
 			<BaseIcon
 				as={icon}
 				className={iconCls}
-			/>;
+			/>
+		);
+	}
 	if (isValidElement(text)) {
 		textNode = text;
 	}
@@ -37,9 +49,9 @@ export function BaseButton({ text, color = "bg-slate-300 hover:bg-slate-400", ic
 			className={buttonCls}
 			{...attrs}
 		>
-			{!iconAfter && ButtonIcon}
+			{!iconAfter && buttonIcon}
 			{textNode}
-			{iconAfter && ButtonIcon}
+			{iconAfter && buttonIcon}
 		</button>
 	);
 }

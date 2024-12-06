@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentProps, RefObject } from "react";
+import { ChangeEvent, ComponentProps, ReactNode, RefObject } from "react";
 
 export type IEventFieldChange = ChangeEvent<HTMLInputElement>;
 
@@ -21,7 +21,8 @@ export interface IFieldText extends IBaseField {
 	placeholder?: string;
 	inputClassname?: string;
 	typeDelay?: number;
-	inputRef?: RefObject<HTMLInputElement>;
+	inputRef?: RefObject<HTMLInputElement | null>;
+	messageSlot?: ReactNode;
 	setValue: (value: string) => void;
 	onEnter?: (value: string) => void;
 	// This is only useful if you're using typeDelay... it will fire after the delay has finished
