@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { Sequelize } from "sequelize";
 import { FindAndCountOptions } from "sequelize/types/model";
 import { UserModel } from "src/db/models/UserModel";
 import { whereSearch } from "src/db/query";
@@ -17,10 +18,11 @@ export class UsersService {
 			limit,
 			offset: (page - 1) * limit,
 			order: sorters.map(({ field, direction }) => {
-				if (field === "lastName") {
-					field = "last_name";
+				field = field.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
+				if (field === "birth_date") {
+					return [field, direction];
 				}
-				return [field.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`), direction];
+				return [Sequelize.fn("lower", Sequelize.col(field)), direction];
 			}),
 		};
 		filters.forEach(({ type, value }) => {

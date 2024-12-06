@@ -132,19 +132,37 @@ export function TableHeader({ children }: ComponentProps<"tr">) {
 	);
 }
 
-export function TableColumnSort({ direction }: ITableColumnSort) {
+export function TableColumnSort({ direction, config }: ITableColumnSort) {
 	if (direction === undefined) {
 		return;
 	}
 	let left: ReactNode;
 	let right: ReactNode;
+	const start = config.type === "number" ? "0" : "A";
+	const end = config.type === "number" ? "9" : "Z";
 	if (direction === EnumSortType.Asc) {
-		left = <span>A</span>;
-		right = <span>Z</span>;
+		left = (
+			<span>
+				{start}
+			</span>
+		);
+		right = (
+			<span>
+				{end}
+			</span>
+		);
 	}
 	else if (direction === EnumSortType.Desc) {
-		left = <span>Z</span>;
-		right = <span>A</span>;
+		left = (
+			<span>
+				{end}
+			</span>
+		);
+		right = (
+			<span>
+				{start}
+			</span>
+		);
 	}
 	return (
 		<article className="flex items-start space-x-px text-xs">
@@ -159,7 +177,7 @@ export function TableColumnSort({ direction }: ITableColumnSort) {
 }
 
 export function TableColumn({ children, config }: ITableColumn) {
-	const sort = useRef<EnumSortType | undefined>();
+	const sort = useRef<EnumSortType>(undefined);
 	const { api } = useTableDataContext();
 
 	function onClickColumn() {
@@ -202,7 +220,10 @@ export function TableColumn({ children, config }: ITableColumn) {
 		>
 			<div className="flex items-center justify-between">
 				{config.title || children}
-				<TableColumnSort direction={sort.current} />
+				<TableColumnSort
+					direction={sort.current}
+					config={config}
+				/>
 			</div>
 		</th>
 	);

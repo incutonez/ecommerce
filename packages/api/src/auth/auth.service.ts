@@ -12,6 +12,10 @@ export class AuthService {
 	}
 
 	async signIn(username: string, pass: string) {
+		// Obviously this would be checking against some sort of hashed DB entry, but this is a dummy example
+		if (pass !== "1337") {
+			throw new UnauthorizedException();
+		}
 		let user: UserEntity;
 		try {
 			user = await this.usersService.getUserByEmail(username);
@@ -33,10 +37,6 @@ export class AuthService {
 					id: address.id,
 				},
 			});
-		}
-		// Obviously this would be checking against some sort of hashed DB entry
-		if (pass !== "test") {
-			throw new UnauthorizedException();
 		}
 		return {
 			accessToken: await this.jwtService.signAsync({

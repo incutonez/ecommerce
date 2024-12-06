@@ -8,6 +8,7 @@ import { UserStore, useUserStore } from "@/stores/User.ts";
 
 export function LogIn() {
 	const { loading } = useUserStore();
+	const [loadingLogin, setLoadingLogin] = useState(false);
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [show, setShow] = useState(true);
@@ -19,7 +20,15 @@ export function LogIn() {
 			onClick={onClickLogIn}
 			icon={IconLogin}
 			disabled={disableLogin}
+			loading={loadingLogin}
 		/>
+	);
+	const passwordMessageSlot = (
+		<span className="text-sm">
+			Use
+			<strong> 1337 </strong>
+			as the password
+		</span>
 	);
 
 	if (loading) {
@@ -30,7 +39,13 @@ export function LogIn() {
 		if (disableLogin) {
 			return;
 		}
-		await UserStore.login(username, password);
+		setLoadingLogin(true);
+		try {
+			await UserStore.login(username, password);
+		}
+		finally {
+			setLoadingLogin(false);
+		}
 	}
 
 	return (
@@ -66,6 +81,7 @@ export function LogIn() {
 					align="left"
 					separator=":"
 					onEnter={onClickLogIn}
+					messageSlot={passwordMessageSlot}
 					inputAttrs={{
 						type: "password",
 					}}

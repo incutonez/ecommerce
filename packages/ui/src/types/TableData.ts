@@ -7,6 +7,7 @@ export interface ITableColumnProp<T = never> {
 	field?: string;
 	cellCls?: string;
 	truncate?: boolean;
+	type?: "string" | "number";
 	renderer?: (record: T) => ReactNode;
 }
 
@@ -41,4 +42,5 @@ export interface ITableDataContext {
 
 export interface ITableColumnSort {
 	direction: EnumSortType | undefined;
+	config: ITableColumnProp;
 }

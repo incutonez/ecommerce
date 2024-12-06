@@ -32,6 +32,7 @@ function RouteComponent() {
 	}, {
 		title: "Birth Date",
 		field: "birthDate",
+		type: "number",
 		renderer(record) {
 			return (
 				<UserBirthDate birthDate={record.birthDate} />

@@ -57,3 +57,7 @@ export { default as IconArrowDown } from "@material-symbols/svg-400/outlined/sou
 export { default as IconSearchEmpty } from "@material-symbols/svg-400/outlined/search_off.svg?react";
 
 export { default as IconLogin } from "@material-symbols/svg-400/outlined/login.svg?react";
+
+export { default as IconCircle } from "@material-symbols/svg-400/outlined/circle.svg?react";
+
+export { default as IconProgress } from "@material-symbols/svg-400/outlined/progress_activity.svg?react";
