@@ -153,7 +153,7 @@ export function ProductReview({ record, ...attrs }: IProductReview) {
 			</section>
 			<p
 				ref={ref}
-				className="overflow-hidden transition-height duration-300"
+				className="overflow-hidden transition-[height] duration-300"
 				style={{
 					height: descriptionHeight,
 				}}

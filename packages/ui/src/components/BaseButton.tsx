@@ -42,7 +42,7 @@ export function BaseButton({ text, color = "bg-slate-300 hover:bg-slate-400", lo
 			</span>;
 	}
 	const hiddenCls = hidden ? "hidden" : "";
-	const disabledCls = attrs.disabled ? "opacity-70 cursor-not-allowed" : "";
+	const disabledCls = attrs.disabled ? "opacity-70 cursor-not-allowed" : "cursor-pointer";
 	const buttonCls = classNames("flex items-center rounded space-x-1", color, hiddenCls, size, disabledCls, textNode ? "px-2" : "px-1", className);
 	return (
 		<button

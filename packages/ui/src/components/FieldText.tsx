@@ -8,7 +8,7 @@ import { emptyFn } from "@/utils.ts";
 
 export function FieldText({ label, separator, value = "", setValue, inputRef, inputClassname, size = "h-8", align = "top", placeholder, className, onEnter = emptyFn, typeDelay = 250, onInputChange = emptyFn, onBlur = emptyFn, onFocus = emptyFn, inputAttrs = {}, labelAttrs = {}, messageSlot }: IFieldText) {
 	const typeDelayTimer = useRef<TSetTimeout>(undefined);
-	className = classNames(className, getLabelAlignCls(align));
+	className = classNames(className, getLabelAlignCls(align), "bg-white");
 	inputClassname = classNames("px-2 outline-none focus-within:ring-2 focus-within:z-1 ring-yellow-500 border border-gray-300 rounded", inputClassname, size);
 	inputAttrs.type ??= "text";
 	labelAttrs.className = classNames(align === "top" ? "" : "leading-8", labelAttrs.className);

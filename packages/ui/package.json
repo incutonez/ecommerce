@@ -17,10 +17,10 @@
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "just-safe-get": "^4.2.0",
+    "jwt-decode": "^4.0.0",
     "pluralize": "^8.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-jwt": "^1.2.2",
     "universal-cookie": "^7.2.2"
   },
   "devDependencies": {
@@ -29,6 +29,7 @@
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@stylistic/eslint-plugin-ts": "^3.0.1",
+    "@tailwindcss/postcss": "^4.0.1",
     "@tanstack/router-plugin": "^1.98.3",
     "@types/node": "^22.12.0",
     "@types/pluralize": "^0.0.33",

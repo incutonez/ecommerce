@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+    --default-font-family: "Open Sans";
+    --text-2xs: 0.5rem;
+    --text-2xs--line-height: 0.5rem;
+}
 
 html, body, #app {
     @apply size-full;
