@@ -8,7 +8,7 @@ import { BaseIcon } from "@/components/BaseIcon.tsx";
 import { FieldDisplay } from "@/components/FieldDisplay.tsx";
 import { LoadingMask } from "@/components/LoadingMask.tsx";
 import { useLoadUser } from "@/hooks/users.ts";
-import { ProductReviewNodes } from "@/routes/products/$productId.tsx";
+import { ProductReviewNodes } from "@/routes/products_/$productId.tsx";
 import { NotFound } from "@/templates/NotFound.tsx";
 import {
 	IUserAddress, IUserAvatar,

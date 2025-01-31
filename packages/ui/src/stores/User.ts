@@ -1,13 +1,12 @@
 import { useSyncExternalStore } from "react";
-import { decodeToken, isExpired } from "react-jwt";
 import { ProfileEntity } from "@incutonez/ecommerce-spec";
+import { jwtDecode } from "jwt-decode";
 import Cookies from "universal-cookie";
 import { AuthAPI, configuration } from "@/apiConfig.ts";
 import { BaseStore } from "@/stores/BaseStore.ts";
 
 interface IUser {
 	token?: ProfileEntity;
-	expired?: boolean;
 	loading?: boolean;
 }
 
@@ -31,15 +30,13 @@ class User extends BaseStore<IUser> {
 		if (!accessToken) {
 			return;
 		}
-		const token = decodeToken<ProfileEntity>(accessToken);
-		const expired = isExpired(accessToken);
+		const token = jwtDecode<ProfileEntity>(accessToken);
 		cookies.set("accessToken", accessToken);
 		// Set this on the global configuration so all API calls get access to it
 		configuration.baseOptions.headers.Authorization = `Bearer: ${accessToken}`;
 		if (setToken) {
 			this.setSnapshot({
 				token: token!,
-				expired,
 			});
 		}
 	}

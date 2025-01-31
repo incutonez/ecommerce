@@ -2,11 +2,10 @@ import { useEffect } from "react";
 import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { BasePagination } from "@/components/BasePagination.tsx";
 import { ContextPaginatedApi, usePaginatedApi } from "@/hooks/api.ts";
-import { RouteViewProducts } from "@/routes.ts";
 import { ProductsList } from "@/templates/ProductsList.tsx";
 import { IProductsSearch } from "@/types.ts";
 
-export const Route = createFileRoute(RouteViewProducts)({
+export const Route = createFileRoute("/products_/")({
 	component: RouteComponent,
 	validateSearch({ search = "" }: Record<string, unknown>): IProductsSearch {
 		return {
@@ -17,7 +16,7 @@ export const Route = createFileRoute(RouteViewProducts)({
 
 function RouteComponent() {
 	const { search } = useSearch({
-		from: RouteViewProducts,
+		from: "/products_/",
 	});
 	const api = usePaginatedApi({
 		search,

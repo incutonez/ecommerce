@@ -1,3 +1,5 @@
+@reference "../index.css";
+
 .field-combo-box {
     @apply h-8 px-2 rounded cursor-pointer bg-slate-300;
 

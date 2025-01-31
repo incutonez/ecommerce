@@ -24,7 +24,7 @@ interface IProductReview extends BaseHTMLAttributes<HTMLElement> {
 	record: ReviewEntity | ReviewUserEntity;
 }
 
-export const Route = createFileRoute(RouteViewProduct)({
+export const Route = createFileRoute("/products_/$productId")({
 	component: RouteComponent,
 });
 
@@ -153,7 +153,7 @@ export function ProductReview({ record, ...attrs }: IProductReview) {
 			</section>
 			<p
 				ref={ref}
-				className="overflow-hidden transition-height duration-300"
+				className="overflow-hidden transition-[height] duration-300"
 				style={{
 					height: descriptionHeight,
 				}}
