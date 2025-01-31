@@ -24,7 +24,7 @@ interface IProductReview extends BaseHTMLAttributes<HTMLElement> {
 	record: ReviewEntity | ReviewUserEntity;
 }
 
-export const Route = createFileRoute(RouteViewProduct)({
+export const Route = createFileRoute("/products_/$productId")({
 	component: RouteComponent,
 });
 

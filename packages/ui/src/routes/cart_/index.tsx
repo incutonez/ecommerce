@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { RouteViewCart } from "@/routes.ts";
 import { CartCheckoutStore } from "@/stores/CartCheckout.ts";
 import { useCart } from "@/stores/CartTotal.ts";
 import { CheckoutItems, CheckoutTotal } from "@/templates/CartCheckout.tsx";
 
-export const Route = createFileRoute(RouteViewCart)({
+export const Route = createFileRoute("/cart_/")({
 	component: RouteComponent,
 });
 
